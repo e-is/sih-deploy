@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- The JBoss service configuration file for the EAR deployer service.
+$Id: ear-deployer.xml,v 1.1 2004/09/05 15:50:06 starksm Exp $
+-->
+<server>
+   <!-- EAR deployer, remove if you are not using ear deployments -->
+   <mbean code="org.jboss.deployment.EARDeployer"
+      name="jboss.j2ee:service=EARDeployer">
+
+      <!-- BLA 12/02/2016 Mettre à Vrai, pour éviter les conflit de version entre les lib des EAR allegro/allegro-q2 -->
+      <attribute name="Isolated">true</attribute>
+
+      <!-- A flag indicating if the ear components should have in VM call
+      optimization disabled.
+      -->
+      <attribute name="CallByValue">false</attribute>
+   </mbean>
+</server>

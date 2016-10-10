@@ -1,0 +1,17 @@
+ (source: http://www.hisyl.fr/mise-en-place-sso-cas-avec-backend-ldap/)
+
+A modifier :
+
+- server.name : le nom du serveur CAS, ce sera un truc du genre https://cas.domaine.com pour cela il faudra mettre
+en place le proxy apache
+- host.name : le nom d’hôte du serveur
+- tgc.encryption.key et tgc.signing.key : des clés générées lors du build à récupérer dans le fichier cas-4.1.0/cas-server-webapp/target/cas-server-webapp-4.1.0/WEB-INF/cas.properties
+
+Il faut ensuite adapter les paramètres ldap correspondant à votre serveur :
+
+- ldap.url : url du ldap
+- ldap.authn.baseDn : l’utilisateur pour l’authentification ldap
+- ldap.authn.managerDn : son mot de passe
+- ldap.authn.searchFilter : le filtre de recherche, dans mon cas l’utilisateur est défini par son uid et j’ai un attribut accountStatus pour éviter que les utilisateurs désactivés se connectent
+- ldap.authn.format : format d’authentification
+- ldap.baseDn : point de départ de la recherche des utilisateurs

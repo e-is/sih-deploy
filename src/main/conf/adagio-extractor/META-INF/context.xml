@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/adagio-extractor">
+
+	<Resource
+			name="jdbc/adagio-extractor-ds"
+			auth="Container"
+			type="javax.sql.DataSource"
+			driverClassName="oracle.jdbc.OracleDriver"
+			url="jdbc:oracle:thin:@10.9.8.153:1521:ORACLE"
+			username="SIH2_ADAGIO_EXTRACTOR_DBA"
+			password="SIH2_ADAGIO_EXTRACTOR_DBA"
+			maxActive="5"
+			maxIdle="2"
+			maxWait="-1"
+	/>
+</Context>

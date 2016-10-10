@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+ <!-- Datasource Ifremer VINSTA -->
+<Context path="/adagio-admin" debug="1" reloadable="true">
+	<Resource 
+		name="jdbc/adagio-admin-v2" 
+		auth="Container" 
+		type="javax.sql.DataSource" 
+		driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@192.168.0.6:1521:ORCL"
+		username="SIH2_ADAGIO_DBA" 
+		password="SIH2_ADAGIO_DBA" 
+		maxActive="10" 
+		maxIdle="5" 
+		maxWait="-1" 
+	/>
+	
+	<Environment
+		name="adagio-admin.conf"
+		type="java.lang.String"
+		value="${CATALINA_HOME}/conf/adagio-admin/adagio-admin.properties"
+		override="false"
+	/>
+	 <!--	value="/etc/tomcat7/Catalina/localhost/adagio-admin.properties"-->
+	
+</Context>
+

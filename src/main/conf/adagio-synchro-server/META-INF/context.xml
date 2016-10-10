@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  SIH Allegro ObsDeb :: Server
+  $Id:$
+  $HeadURL:$
+  %%
+  Copyright (C) 2013 - 2014 Ifremer
+  %%
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  #L%
+  -->
+<Context path="/adagio-synchro-server">
+  <Resource
+      name="jdbc/adagio-ds"
+      auth="Container"
+      type="javax.sql.DataSource"
+      driverClassName="oracle.jdbc.driver.OracleDriver"
+      url="jdbc:oracle:thin:@10.9.8.153:1521:ORACLE"
+      username="SIH2_ADAGIO_DBA"
+      password="SIH2_ADAGIO_DBA"
+      maxActive="5"
+      maxIdle="2"
+      maxWait="-1"
+    />
+
+  <!-- Use to set the configuration file path (default path is: <WAR>/WEB-INF/classes/synchro-server.config) -->
+  <!-- To change the default path, you can use also the JVM arg: -Dsynchro-server.config=/path/to/config/file
+  <Environment
+    name="synchro-server.config"
+    type="java.lang.String"
+    value="${catalina.home}/conf/adagio-synchro-server.config"
+    override="false"
+  />-->
+
+</Context>
