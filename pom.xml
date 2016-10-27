@@ -76,13 +76,13 @@
     <!-- webapps version -->
     <adagio-admin.version>2.5.8</adagio-admin.version>
 
-    <adagio-synchro-server.version>3.14.6</adagio-synchro-server.version>
+    <adagio-synchro-server.version>4.0.5</adagio-synchro-server.version>
 
     <adagio-extractor.version>2.1.0</adagio-extractor.version>
 
-    <allegro-obsdeb.version>1.4.15.2</allegro-obsdeb.version>
-    <allegro-obsdeb.jre.version>1.7.72</allegro-obsdeb.jre.version>
-    <allegro-obsdeb.launcher.version>1.3.11</allegro-obsdeb.launcher.version>
+    <allegro-obsdeb.version>1.8.2-SFA</allegro-obsdeb.version>
+    <allegro-obsdeb.jre.version>1.8.77</allegro-obsdeb.jre.version>
+    <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
     <allegro-obsdeb.classifier>full-windows-i586</allegro-obsdeb.classifier>
     <allegro-obsdeb.export-plugin.version>0.9</allegro-obsdeb.export-plugin.version>
     <allegro-obsdeb.distributionUrl>http://www.ifremer.fr/maven/repository</allegro-obsdeb.distributionUrl>
@@ -93,15 +93,15 @@
     <allegro.version>3.7.2</allegro.version>
     <allegro-remote.classifier>activeDirectory</allegro-remote.classifier>
 
-    <tomcat.url>http://10.9.8.87</tomcat.url>
+    <tomcat.url>http://10.9.8.30:8080</tomcat.url>
     <database.jdbc.url.at>10.9.8.153:1521:ORACLE</database.jdbc.url.at>
     <database.jdbc.username>SIH2_ADAGIO_DBA</database.jdbc.username>
     <database.jdbc.password>SIH2_ADAGIO_DBA</database.jdbc.password>
     <database.jdbc.schema>SIH2_ADAGIO_DBA</database.jdbc.schema>
 
     <!-- lib versions -->
-    <jdbc.ojdbc7.version>12.1.0.1.0</jdbc.ojdbc7.version>
-    <jdbc.hsqldb.version>1.8.0.10</jdbc.hsqldb.version>
+    <jdbc.ojdbc7.version>12.1.0.2.0</jdbc.ojdbc7.version>
+    <jdbc.hsqldb.version>2.3.2</jdbc.hsqldb.version>
     <log4j.version>1.2.17</log4j.version>
     <slf4j.version>1.7.8</slf4j.version>
 
@@ -128,6 +128,11 @@
             <url>http://nexus.e-is.pro/nexus/content/groups/sih-adagio/</url>
             <releases><enabled>true</enabled><checksumPolicy>fail</checksumPolicy></releases>
         </repository>
+      <repository>
+        <id>allegro-obsdeb-public-group</id>
+        <url>http://nexus.e-is.pro/nexus/content/groups/sih-allegro-obsdeb</url>
+        <releases><enabled>true</enabled><checksumPolicy>fail</checksumPolicy></releases>
+      </repository>
     </repositories>
 
    <dependencies>
@@ -265,7 +270,7 @@
           <version>${jdbc.ojdbc7.version}</version>
       </dependency>
        <dependency>
-           <groupId>hsqldb</groupId>
+           <groupId>org.hsqldb</groupId>
            <artifactId>hsqldb</artifactId>
            <version>${jdbc.hsqldb.version}</version>
        </dependency>
@@ -358,7 +363,7 @@
               </exclusions>
             </dependency>
             <dependency>
-              <groupId>hsqldb</groupId>
+              <groupId>org.hsqldb</groupId>
               <artifactId>hsqldb</artifactId>
               <version>${jdbc.hsqldb.version}</version>
             </dependency>
@@ -491,7 +496,7 @@
                                   <overWriteReleases>false</overWriteReleases>
                                   <overWriteSnapshots>true</overWriteSnapshots>
                                   <overWriteIfNewer>true</overWriteIfNewer>
-                                  <outputDirectory>${webapps.dir}/updates/allegro-obsdeb</outputDirectory>
+                                  <outputDirectory>${site.dir}/updates/allegro-obsdeb</outputDirectory>
                                   <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
                                   <silent>false</silent>
                                   <scope>provided</scope>
@@ -536,9 +541,12 @@
                                       <move file="${webapps.dir}/cas-server-webapp-${cas.version}-ldap-war" tofile="${webapps.dir}/cas"  failonerror="false"/>
 
                                       <!-- Patch adagio-admin -->
+                                      <move file="${webapps.dir}/adagio-admin/WEB-INF/classes/fr/ifremer/adagio/administration/service/impl/LDAPServiceImpl.class"
+                                            tofile="${webapps.dir}/adagio-admin/WEB-INF/classes/fr/ifremer/adagio/administration/service/impl/LDAPServiceImpl.class_old"  failonerror="false"/>
                                       <copy todir="${webapps.dir}/adagio-admin">
                                         <fileset dir="src/main/conf/adagio-admin"/>
                                       </copy>
+                                      <delete file="${webapps.dir}/adagio-admin/WEB-INF/lib/ldap-1.1.jar"/>
                                       <delete dir="${webapps.dir}/adagio-admin-${adagio-admin.version}-war"/>
                                       <replaceregexp match="hibernate.show_sql&quot;&gt;true&lt;" replace="hibernate.show_sql&quot;&gt;false&lt;" flags="g" byline="true">
                                           <fileset dir="${webapps.dir}/adagio-admin/WEB-INF/classes" includes="**/xeDB.spring.xml"/>
