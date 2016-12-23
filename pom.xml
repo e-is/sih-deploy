@@ -80,7 +80,7 @@
 
     <adagio-extractor.version>2.1.0</adagio-extractor.version>
 
-    <allegro-obsdeb.version>1.8.2-SFA</allegro-obsdeb.version>
+    <allegro-obsdeb.version>1.8.3-SFA</allegro-obsdeb.version>
     <allegro-obsdeb.jre.version>1.8.77</allegro-obsdeb.jre.version>
     <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
     <allegro-obsdeb.classifier>full-windows-i586</allegro-obsdeb.classifier>
