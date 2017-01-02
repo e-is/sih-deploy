@@ -70,7 +70,7 @@
 
   <properties>
     <!-- server version -->
-    <tomcat.version>7.0.67</tomcat.version>
+    <tomcat.version>7.0.73</tomcat.version>
     <jboss.version>4.0.4.GA</jboss.version>
 
     <!-- webapps version -->
@@ -109,7 +109,7 @@
     <cas.classifier>ldap</cas.classifier>
 
     <tomcat.skip>false</tomcat.skip>
-    <jboss.skip>false</jboss.skip>
+    <jboss.skip>true</jboss.skip>
     <client.skip>false</client.skip>
 
     <clients.dir>${project.build.directory}/clients</clients.dir>
@@ -434,7 +434,6 @@
                                   <overWriteIfNewer>true</overWriteIfNewer>
                                   <outputDirectory>${project.build.directory}</outputDirectory>
                                   <silent>true</silent>
-                                  <scope>provided</scope>
                                   <includeArtifactIds>tomcat</includeArtifactIds>
                               </configuration>
                           </execution>
@@ -452,7 +451,6 @@
                                   <outputDirectory>${project.build.directory}/apache-tomcat-${tomcat.version}/webapps</outputDirectory>
                                   <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
                                   <silent>true</silent>
-                                  <scope>provided</scope>
                                   <includeArtifactIds>
                                       adagio-admin,
                                       adagio-synchro-server,
@@ -477,7 +475,6 @@
                                   <overWriteIfNewer>true</overWriteIfNewer>
                                   <outputDirectory>${project.build.directory}/apache-tomcat-${tomcat.version}/lib</outputDirectory>
                                   <silent>true</silent>
-                                  <scope>provided</scope>
                                   <includeArtifactIds>
                                       ojdbc7,
                                       hsqldb,
@@ -499,7 +496,6 @@
                                   <outputDirectory>${site.dir}/updates/allegro-obsdeb</outputDirectory>
                                   <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
                                   <silent>false</silent>
-                                  <scope>provided</scope>
                                   <includeArtifactIds>
                                       t0403_product_OBSDEB_export
                                   </includeArtifactIds>
@@ -555,6 +551,10 @@
                                       <!-- Patch adagio synchro server -->
                                       <copy todir="${webapps.dir}/adagio-synchro-server">
                                           <fileset dir="src/main/conf/adagio-synchro-server"/>
+                                      </copy>
+                                      <dependencyfilesets/>
+                                      <copy todir="${webapps.dir}/adagio-synchro-server/WEB-INF/lib">
+                                          <fileset refid="log4j:log4j:jar"/>
                                       </copy>
 
                                       <!-- Patch extractor -->
@@ -716,7 +716,6 @@
                               <configuration>
                                   <outputDirectory>${project.build.directory}/jboss-${jboss.version}/server/default/lib</outputDirectory>
                                   <silent>true</silent>
-                                  <scope>provided</scope>
                                   <includeArtifactIds>
                                       ojdbc7
                                   </includeArtifactIds>
