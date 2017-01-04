@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>pro.eis.sih</groupId>
@@ -26,7 +27,7 @@
       <organization>EIS</organization>
       <organizationUrl>http://www.e-is.pro</organizationUrl>
     </developer>
-	<developer>
+    <developer>
       <id>lp1ee9d</id>
       <name>Ludovic Pecquot</name>
       <email>ludovic.pecquot@e-is.pro</email>
@@ -69,20 +70,26 @@
   </issueManagement>
 
   <properties>
+    <!-- deploy environment -->
+    <env>none</env>
+
     <!-- server version -->
-    <tomcat.version>7.0.73</tomcat.version>
+    <tomcat.version>8.0.39</tomcat.version>
+    <!--<tomcat.version>7.0.73</tomcat.version>-->
+    <tomcat.port>8080</tomcat.port>
+    <tomcat.host>localhost</tomcat.host>
+    <tomcat.url>http://${tomcat.host}:${tomcat.port}</tomcat.url>
     <jboss.version>4.0.4.GA</jboss.version>
 
     <!-- webapps version -->
     <adagio-admin.version>2.5.8</adagio-admin.version>
-
-    <adagio-synchro-server.version>4.0.5</adagio-synchro-server.version>
-
+    <adagio-synchro-server.version>4.0.4</adagio-synchro-server.version>
     <adagio-extractor.version>2.1.0</adagio-extractor.version>
 
-    <allegro-obsdeb.version>1.8.3-SFA</allegro-obsdeb.version>
+    <!-- clients version -->
+    <allegro-obsdeb.version>1.8.2</allegro-obsdeb.version>
+    <allegro-obsdeb.launcher.version>1.8.2</allegro-obsdeb.launcher.version>
     <allegro-obsdeb.jre.version>1.8.77</allegro-obsdeb.jre.version>
-    <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
     <allegro-obsdeb.classifier>full-windows-i586</allegro-obsdeb.classifier>
     <allegro-obsdeb.export-plugin.version>0.9</allegro-obsdeb.export-plugin.version>
     <allegro-obsdeb.distributionUrl>http://www.ifremer.fr/maven/repository</allegro-obsdeb.distributionUrl>
@@ -93,24 +100,19 @@
     <allegro.version>3.7.2</allegro.version>
     <allegro-remote.classifier>activeDirectory</allegro-remote.classifier>
 
-    <tomcat.url>http://10.9.8.30:8080</tomcat.url>
-    <database.jdbc.url.at>10.9.8.153:1521:ORACLE</database.jdbc.url.at>
-    <database.jdbc.username>SIH2_ADAGIO_DBA</database.jdbc.username>
-    <database.jdbc.password>SIH2_ADAGIO_DBA</database.jdbc.password>
-    <database.jdbc.schema>SIH2_ADAGIO_DBA</database.jdbc.schema>
-
     <!-- lib versions -->
     <jdbc.ojdbc7.version>12.1.0.2.0</jdbc.ojdbc7.version>
     <jdbc.hsqldb.version>2.3.2</jdbc.hsqldb.version>
     <log4j.version>1.2.17</log4j.version>
     <slf4j.version>1.7.8</slf4j.version>
 
-    <cas.version>4.1.4</cas.version>
-    <cas.classifier>ldap</cas.classifier>
+    <!--<cas.version>4.1.4</cas.version>-->
+    <!--<cas.classifier>ldap</cas.classifier>-->
 
-    <tomcat.skip>false</tomcat.skip>
-    <jboss.skip>true</jboss.skip>
-    <client.skip>false</client.skip>
+    <!-- those properties needs to be passed as arguments -->
+    <!--<tomcat.skip>true</tomcat.skip>-->
+    <!--<jboss.skip>true</jboss.skip>-->
+    <!--<client.skip>false</client.skip>-->
 
     <clients.dir>${project.build.directory}/clients</clients.dir>
     <tomcat.dir>${project.build.directory}/apache-tomcat-${tomcat.version}</tomcat.dir>
@@ -122,178 +124,192 @@
   </properties>
 
   <!-- Repositories needed to find the dependencies -->
-    <repositories>
-        <repository>
-            <id>adagio-public-group</id>
-            <url>http://nexus.e-is.pro/nexus/content/groups/sih-adagio/</url>
-            <releases><enabled>true</enabled><checksumPolicy>fail</checksumPolicy></releases>
-        </repository>
-      <repository>
-        <id>allegro-obsdeb-public-group</id>
-        <url>http://nexus.e-is.pro/nexus/content/groups/sih-allegro-obsdeb</url>
-        <releases><enabled>true</enabled><checksumPolicy>fail</checksumPolicy></releases>
-      </repository>
-    </repositories>
+  <repositories>
+    <repository>
+      <id>adagio-public-group</id>
+      <url>http://nexus.e-is.pro/nexus/content/groups/sih-adagio/</url>
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>fail</checksumPolicy>
+      </releases>
+    </repository>
+    <repository>
+      <id>allegro-obsdeb-public-group</id>
+      <url>http://nexus.e-is.pro/nexus/content/groups/sih-allegro-obsdeb</url>
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>fail</checksumPolicy>
+      </releases>
+    </repository>
+    <repository>
+      <id>ifremer-public-group</id>
+      <url>http://www.ifremer.fr/maven/repository</url>
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>fail</checksumPolicy>
+      </releases>
+    </repository>
+  </repositories>
 
-   <dependencies>
-      <!-- Adagio-Admin -->
-      <dependency>
-          <groupId>fr.ifremer.adagio</groupId>
-          <artifactId>adagio-admin</artifactId>
-          <version>${adagio-admin.version}</version>
-          <type>war</type>
-          <exclusions>
-              <exclusion>
-                  <groupId>*</groupId>
-                  <artifactId>*</artifactId>
-              </exclusion>
-          </exclusions>
-      </dependency>
+  <dependencies>
+    <!-- Adagio-Admin -->
+    <dependency>
+      <groupId>fr.ifremer.adagio</groupId>
+      <artifactId>adagio-admin</artifactId>
+      <version>${adagio-admin.version}</version>
+      <type>war</type>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-      <!-- Extractor -->
-      <dependency>
-          <groupId>fr.ifremer.adagio</groupId>
-          <artifactId>adagio-extractor-ui</artifactId>
-          <version>${adagio-extractor.version}</version>
-          <type>war</type>
-          <exclusions>
-              <exclusion>
-                  <groupId>*</groupId>
-                  <artifactId>*</artifactId>
-              </exclusion>
-          </exclusions>
-      </dependency>
-       <dependency>
-           <groupId>fr.ifremer.adagio</groupId>
-           <artifactId>adagio-extractor-ui</artifactId>
-           <version>${adagio-extractor.version}</version>
-           <classifier>standalone</classifier>
-           <type>zip</type>
-           <exclusions>
-               <exclusion>
-                   <groupId>*</groupId>
-                   <artifactId>*</artifactId>
-               </exclusion>
-           </exclusions>
-       </dependency>
+    <!-- Extractor -->
+    <dependency>
+      <groupId>fr.ifremer.adagio</groupId>
+      <artifactId>adagio-extractor-ui</artifactId>
+      <version>${adagio-extractor.version}</version>
+      <type>war</type>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>fr.ifremer.adagio</groupId>
+      <artifactId>adagio-extractor-ui</artifactId>
+      <version>${adagio-extractor.version}</version>
+      <classifier>standalone</classifier>
+      <type>zip</type>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-      <!-- ObsDeb -->
-      <dependency>
-          <groupId>fr.ifremer.allegro.obsdeb</groupId>
-          <artifactId>obsdeb-ui-swing</artifactId>
-          <version>${allegro-obsdeb.version}</version>
-          <classifier>${allegro-obsdeb.classifier}</classifier>
-          <type>zip</type>
-          <exclusions>
-              <exclusion>
-                  <groupId>*</groupId>
-                  <artifactId>*</artifactId>
-              </exclusion>
-          </exclusions>
-      </dependency>
-      <dependency>
-          <groupId>fr.ifremer.adagio</groupId>
-          <artifactId>adagio-synchro-server</artifactId>
-          <version>${adagio-synchro-server.version}</version>
-          <type>war</type>
-          <exclusions>
-              <exclusion>
-                  <groupId>*</groupId>
-                  <artifactId>*</artifactId>
-              </exclusion>
-          </exclusions>
-      </dependency>
+    <!-- ObsDeb -->
+    <dependency>
+      <groupId>fr.ifremer.allegro.obsdeb</groupId>
+      <artifactId>obsdeb-ui-swing</artifactId>
+      <version>${allegro-obsdeb.version}</version>
+      <classifier>${allegro-obsdeb.classifier}</classifier>
+      <type>zip</type>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>fr.ifremer.adagio</groupId>
+      <artifactId>adagio-synchro-server</artifactId>
+      <version>${adagio-synchro-server.version}</version>
+      <type>war</type>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-      <!-- Allegro-q2 -->
-      <dependency>
-          <groupId>fr.ifremer.allegro</groupId>
-          <artifactId>allegro-remote-q2</artifactId>
-          <version>${allegro-q2.version}</version>
-          <classifier>activeDirectory</classifier>
-          <type>ear</type>
-          <exclusions>
-              <exclusion>
-                  <groupId>*</groupId>
-                  <artifactId>*</artifactId>
-              </exclusion>
-          </exclusions>
-      </dependency>
-      <dependency>
-          <groupId>fr.ifremer.allegro</groupId>
-          <artifactId>allegro-q2</artifactId>
-          <version>${allegro-q2.version}</version>
-          <type>zip</type>
-          <exclusions>
-              <exclusion>
-                  <groupId>*</groupId>
-                  <artifactId>*</artifactId>
-              </exclusion>
-          </exclusions>
-      </dependency>
+    <!-- Allegro-q2 -->
+    <dependency>
+      <groupId>fr.ifremer.allegro</groupId>
+      <artifactId>allegro-remote-q2</artifactId>
+      <version>${allegro-q2.version}</version>
+      <classifier>activeDirectory</classifier>
+      <type>ear</type>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>fr.ifremer.allegro</groupId>
+      <artifactId>allegro-q2</artifactId>
+      <version>${allegro-q2.version}</version>
+      <type>zip</type>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-      <!-- Allegro -->
-      <dependency>
-          <groupId>fr.ifremer.allegro</groupId>
-          <artifactId>allegro-remote</artifactId>
-          <classifier>noldap</classifier>
-          <version>${allegro.version}</version>
-          <type>ear</type>
-          <exclusions>
-              <exclusion>
-                  <groupId>*</groupId>
-                  <artifactId>*</artifactId>
-              </exclusion>
-          </exclusions>
-      </dependency>
-      <dependency>
-          <groupId>fr.ifremer.allegro</groupId>
-          <artifactId>allegro</artifactId>
-          <version>${allegro.version}</version>
-          <type>zip</type>
-          <exclusions>
-              <exclusion>
-                  <groupId>*</groupId>
-                  <artifactId>*</artifactId>
-              </exclusion>
-          </exclusions>
-      </dependency>
-      <dependency>
-          <groupId>fr.ifremer.allegro.obsdeb</groupId>
-          <artifactId>t0403_product_OBSDEB_export</artifactId>
-          <version>${allegro-obsdeb.export-plugin.version}</version>
-          <type>zip</type>
-      </dependency>
+    <!-- Allegro -->
+    <dependency>
+      <groupId>fr.ifremer.allegro</groupId>
+      <artifactId>allegro-remote</artifactId>
+      <classifier>noldap</classifier>
+      <version>${allegro.version}</version>
+      <type>ear</type>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>fr.ifremer.allegro</groupId>
+      <artifactId>allegro</artifactId>
+      <version>${allegro.version}</version>
+      <type>zip</type>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>fr.ifremer.allegro.obsdeb</groupId>
+      <artifactId>t0403_product_OBSDEB_export</artifactId>
+      <version>${allegro-obsdeb.export-plugin.version}</version>
+      <type>zip</type>
+    </dependency>
 
-      <dependency>
-          <groupId>com.oracle</groupId>
-          <artifactId>ojdbc7</artifactId>
-          <version>${jdbc.ojdbc7.version}</version>
-      </dependency>
-       <dependency>
-           <groupId>org.hsqldb</groupId>
-           <artifactId>hsqldb</artifactId>
-           <version>${jdbc.hsqldb.version}</version>
-       </dependency>
-       <dependency>
-           <groupId>log4j</groupId>
-           <artifactId>log4j</artifactId>
-           <version>${log4j.version}</version>
-       </dependency>
+    <dependency>
+      <groupId>com.oracle</groupId>
+      <artifactId>ojdbc7</artifactId>
+      <version>${jdbc.ojdbc7.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>${jdbc.hsqldb.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
 
-      <!-- CAS server -->
-      <dependency>
-          <groupId>org.jasig.cas</groupId>
-          <artifactId>cas-server-webapp</artifactId>
-          <version>${cas.version}</version>
-          <classifier>${cas.classifier}</classifier>
-          <type>war</type>
-          <exclusions>
-              <exclusion>
-                  <groupId>*</groupId>
-                  <artifactId>*</artifactId>
-              </exclusion>
-          </exclusions>
-      </dependency>
+    <!-- CAS server -->
+    <!--<dependency>-->
+    <!--<groupId>org.jasig.cas</groupId>-->
+    <!--<artifactId>cas-server-webapp</artifactId>-->
+    <!--<version>${cas.version}</version>-->
+    <!--<classifier>${cas.classifier}</classifier>-->
+    <!--<type>war</type>-->
+    <!--<exclusions>-->
+    <!--<exclusion>-->
+    <!--<groupId>*</groupId>-->
+    <!--<artifactId>*</artifactId>-->
+    <!--</exclusion>-->
+    <!--</exclusions>-->
+    <!--</dependency>-->
   </dependencies>
 
   <pluginRepositories>
@@ -312,75 +328,73 @@
   </pluginRepositories>
 
   <build>
-    <pluginManagement>
-      <plugins>
 
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.1</version>
-        </plugin>
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <dependencies>
+          <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>1.0b3</version>
+            <exclusions>
+              <exclusion>
+                <groupId>ant</groupId>
+                <artifactId>ant</artifactId>
+              </exclusion>
+            </exclusions>
+          </dependency>
+        </dependencies>
+      </plugin>
 
-        <plugin>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>2.5</version>
-        </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.6</version>
+      </plugin>
 
-        <plugin>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>2.8</version>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.10</version>
+        <configuration>
+          <overWriteReleases>false</overWriteReleases>
+          <overWriteSnapshots>true</overWriteSnapshots>
+          <overWriteIfNewer>true</overWriteIfNewer>
+          <silent>false</silent>
+          <scope>provided</scope>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>1.4.1</version>
+        <executions>
+          <execution>
+            <id>enforce-property</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
             <configuration>
-                <overWriteReleases>false</overWriteReleases>
-                <overWriteSnapshots>true</overWriteSnapshots>
-                <overWriteIfNewer>true</overWriteIfNewer>
-                <silent>true</silent>
-                <scope>provided</scope>
+              <rules>
+                <requireProperty>
+                  <property>env</property>
+                  <message>You must set a deploy environment (-Denv=...) !</message>
+                  <regex>test|sfa</regex>
+                  <regexMessage>The 'env' property must be one of {test,sfa}.</regexMessage>
+                </requireProperty>
+              </rules>
+              <fail>true</fail>
             </configuration>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.7</version>
-          <dependencies>
-            <dependency>
-              <groupId>org.apache.ant</groupId>
-              <artifactId>ant</artifactId>
-              <version>1.8.2</version>
-            </dependency>
-            <dependency>
-              <groupId>ant</groupId>
-              <artifactId>ant-optional</artifactId>
-              <version>1.5.2</version>
-            </dependency>
-            <dependency>
-              <groupId>ant-contrib</groupId>
-              <artifactId>ant-contrib</artifactId>
-              <version>1.0b2</version>
-              <exclusions>
-                <exclusion>
-                  <groupId>ant</groupId>
-                  <artifactId>ant</artifactId>
-                </exclusion>
-              </exclusions>
-            </dependency>
-            <dependency>
-              <groupId>org.hsqldb</groupId>
-              <artifactId>hsqldb</artifactId>
-              <version>${jdbc.hsqldb.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>com.oracle</groupId>
-              <artifactId>ojdbc7</artifactId>
-              <version>${jdbc.ojdbc7.version}</version>
-            </dependency>
-          </dependencies>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.4</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
 
     <extensions>
       <!-- Enabling the use of scp/sftp:// with maven 3.0 -->
@@ -399,548 +413,688 @@
 
   <profiles>
 
-      <profile>
-          <id>tomcat</id>
-          <activation>
-              <property>
-                  <name>tomcat.skip</name>
-                  <value>!true</value>
-              </property>
-          </activation>
-          <dependencies>
-              <dependency>
-                  <groupId>org.apache.tomcat</groupId>
-                  <artifactId>tomcat</artifactId>
-                  <version>${tomcat.version}</version>
-                  <type>zip</type>
-              </dependency>
-          </dependencies>
+    <profile>
+      <id>profile-default</id>
+      <activation>
+        <property>
+          <name>env</name>
+          <value>test</value>
+        </property>
+      </activation>
+      <properties>
+        <!-- test configuration-->
+        <allegro-obsdeb.version>1.8.2-SFA</allegro-obsdeb.version>
+        <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
+        <adagio-synchro-server.version>4.0.5</adagio-synchro-server.version>
+        <tomcat.port>8081</tomcat.port>
+      </properties>
+    </profile>
 
-          <build>
-              <defaultGoal>package</defaultGoal>
-              <plugins>
-                  <plugin>
-                      <artifactId>maven-dependency-plugin</artifactId>
-                      <executions>
-                          <execution>
-                              <id>unpack-tomcat</id>
-                              <phase>prepare-package</phase>
-                              <goals>
-                                  <goal>unpack-dependencies</goal>
-                              </goals>
-                              <configuration>
-                                  <overWriteReleases>false</overWriteReleases>
-                                  <overWriteSnapshots>true</overWriteSnapshots>
-                                  <overWriteIfNewer>true</overWriteIfNewer>
-                                  <outputDirectory>${project.build.directory}</outputDirectory>
-                                  <silent>true</silent>
-                                  <includeArtifactIds>tomcat</includeArtifactIds>
-                              </configuration>
-                          </execution>
+    <profile>
+      <id>profile-sfa</id>
+      <activation>
+        <property>
+          <name>env</name>
+          <value>sfa</value>
+        </property>
+      </activation>
+      <properties>
+        <!-- SFA properties -->
+        <allegro-obsdeb.version>1.8.3-SFA</allegro-obsdeb.version>
+        <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
+        <adagio-synchro-server.version>4.0.7</adagio-synchro-server.version>
+        <tomcat.host>10.9.8.30</tomcat.host>
+      </properties>
+    </profile>
 
-                          <execution>
-                              <id>unpack-wars</id>
-                              <phase>prepare-package</phase>
-                              <goals>
-                                  <goal>unpack-dependencies</goal>
-                              </goals>
-                              <configuration>
-                                  <overWriteReleases>false</overWriteReleases>
-                                  <overWriteSnapshots>true</overWriteSnapshots>
-                                  <overWriteIfNewer>true</overWriteIfNewer>
-                                  <outputDirectory>${project.build.directory}/apache-tomcat-${tomcat.version}/webapps</outputDirectory>
-                                  <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
-                                  <silent>true</silent>
-                                  <includeArtifactIds>
-                                      adagio-admin,
-                                      adagio-synchro-server,
-                                      adagio-extractor-ui
-                                  </includeArtifactIds>
-                                  <excludeClassifiers>
-                                      standalone
-                                  </excludeClassifiers>
-                                  <!-- cas-server-webapp -->
-                              </configuration>
-                          </execution>
+    <profile>
+      <id>tomcat</id>
+      <activation>
+        <property>
+          <name>tomcat.skip</name>
+          <value>!true</value>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.tomcat</groupId>
+          <artifactId>tomcat</artifactId>
+          <version>${tomcat.version}</version>
+          <type>zip</type>
+        </dependency>
+      </dependencies>
 
-                          <execution>
-                              <id>copy-libs</id>
-                              <phase>prepare-package</phase>
-                              <goals>
-                                  <goal>copy-dependencies</goal>
-                              </goals>
-                              <configuration>
-                                  <overWriteReleases>false</overWriteReleases>
-                                  <overWriteSnapshots>true</overWriteSnapshots>
-                                  <overWriteIfNewer>true</overWriteIfNewer>
-                                  <outputDirectory>${project.build.directory}/apache-tomcat-${tomcat.version}/lib</outputDirectory>
-                                  <silent>true</silent>
-                                  <includeArtifactIds>
-                                      ojdbc7,
-                                      hsqldb,
-                                      log4j
-                                  </includeArtifactIds>
-                              </configuration>
-                          </execution>
+      <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack-tomcat</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>unpack-dependencies</goal>
+                </goals>
+                <configuration>
+                  <!--<overWriteReleases>false</overWriteReleases>-->
+                  <!--<overWriteSnapshots>true</overWriteSnapshots>-->
+                  <!--<overWriteIfNewer>true</overWriteIfNewer>-->
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                  <!--<silent>false</silent>-->
+                  <includeArtifactIds>tomcat</includeArtifactIds>
+                </configuration>
+              </execution>
 
-                          <execution>
-                              <id>unpack-obsdeb-plugins</id>
-                              <phase>prepare-package</phase>
-                              <goals>
-                                  <goal>copy-dependencies</goal>
-                              </goals>
-                              <configuration>
-                                  <overWriteReleases>false</overWriteReleases>
-                                  <overWriteSnapshots>true</overWriteSnapshots>
-                                  <overWriteIfNewer>true</overWriteIfNewer>
-                                  <outputDirectory>${site.dir}/updates/allegro-obsdeb</outputDirectory>
-                                  <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
-                                  <silent>false</silent>
-                                  <includeArtifactIds>
-                                      t0403_product_OBSDEB_export
-                                  </includeArtifactIds>
-                              </configuration>
-                          </execution>
-                      </executions>
-                  </plugin>
+              <execution>
+                <id>unpack-wars</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>unpack-dependencies</goal>
+                </goals>
+                <configuration>
+                  <!--<overWriteReleases>true</overWriteReleases>-->
+                  <!--<overWriteSnapshots>true</overWriteSnapshots>-->
+                  <!--<overWriteIfNewer>true</overWriteIfNewer>-->
+                  <outputDirectory>${webapps.dir}</outputDirectory>
+                  <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
+                  <!--<silent>false</silent>-->
+                  <includeArtifactIds>
+                    adagio-admin,
+                    adagio-synchro-server,
+                    adagio-extractor-ui
+                  </includeArtifactIds>
+                  <excludeClassifiers>
+                    standalone
+                  </excludeClassifiers>
+                  <!-- cas-server-webapp -->
+                </configuration>
+              </execution>
 
-                  <plugin>
-                      <artifactId>maven-antrun-plugin</artifactId>
-                      <executions>
-                          <execution>
-                              <id>repackage-tomcat</id>
-                              <phase>package</phase>
-                              <goals>
-                                  <goal>run</goal>
-                              </goals>
+              <execution>
+                <id>copy-libs</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                  <!--<overWriteReleases>true</overWriteReleases>-->
+                  <!--<overWriteSnapshots>true</overWriteSnapshots>-->
+                  <!--<overWriteIfNewer>true</overWriteIfNewer>-->
+                  <outputDirectory>${tomcat.dir}/lib</outputDirectory>
+                  <!--<silent>false</silent>-->
+                  <includeArtifactIds>
+                    ojdbc7,
+                    hsqldb,
+                    log4j
+                  </includeArtifactIds>
+                </configuration>
+              </execution>
 
-                              <configuration>
-                                  <target>
-                                      <echo message="Configuring tomcat..." />
+              <execution>
+                <id>unpack-obsdeb-plugins</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                  <!--<overWriteReleases>true</overWriteReleases>-->
+                  <!--<overWriteSnapshots>true</overWriteSnapshots>-->
+                  <!--<overWriteIfNewer>true</overWriteIfNewer>-->
+                  <outputDirectory>${site.dir}/updates/allegro-obsdeb</outputDirectory>
+                  <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
+                  <!--<silent>false</silent>-->
+                  <includeArtifactIds>
+                    t0403_product_OBSDEB_export
+                  </includeArtifactIds>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
 
-                                      <!-- Remove the default webapps -->
-                                      <delete dir="${webapps.dir}/docs" />
-                                      <delete dir="${webapps.dir}/examples" />
-                                      <!--delete dir="${webapps.dir}/manager" /-->
-                                      <delete dir="${webapps.dir}/host-manager"/>
-                                      <delete includeEmptyDirs="true">
-                                          <!-- keep downloads (see 'clients' profile)-->
-                                          <fileset dir="${webapps.dir}/ROOT" excludes="downloads/*,updates/*"/>
-                                      </delete>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>repackage-tomcat</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target name="configure_tomcat">
+                    <taskdef resource="net/sf/antcontrib/antlib.xml">
+                      <classpath refid="maven.plugin.classpath"/>
+                    </taskdef>
 
-                                      <!-- Patch the bin/catalina* scripts to include some of our jars in the classpath -->
+                    <echo message="Configuring tomcat..."/>
 
-                                      <!-- Rename wars -->
-                                      <move file="${webapps.dir}/adagio-synchro-server-${adagio-synchro-server.version}-war" tofile="${webapps.dir}/adagio-synchro-server"  failonerror="false"/>
-                                      <move file="${webapps.dir}/adagio-admin-${adagio-admin.version}-war" tofile="${webapps.dir}/adagio-admin" failonerror="false"/>
-                                      <move file="${webapps.dir}/adagio-extractor-ui-${adagio-extractor.version}-war" tofile="${webapps.dir}/adagio-extractor"  failonerror="false"/>
-                                      <move file="${webapps.dir}/cas-server-webapp-${cas.version}-ldap-war" tofile="${webapps.dir}/cas"  failonerror="false"/>
+                    <!-- Remove the default webapps -->
+                    <delete dir="${webapps.dir}/docs"/>
+                    <delete dir="${webapps.dir}/examples"/>
+                    <!--delete dir="${webapps.dir}/manager" /-->
+                    <delete dir="${webapps.dir}/host-manager"/>
+                    <delete includeEmptyDirs="true">
+                      <!-- keep downloads (see 'clients' profile)-->
+                      <fileset dir="${site.dir}" excludes="downloads/*,updates/*"/>
+                    </delete>
 
-                                      <!-- Patch adagio-admin -->
-                                      <move file="${webapps.dir}/adagio-admin/WEB-INF/classes/fr/ifremer/adagio/administration/service/impl/LDAPServiceImpl.class"
-                                            tofile="${webapps.dir}/adagio-admin/WEB-INF/classes/fr/ifremer/adagio/administration/service/impl/LDAPServiceImpl.class_old"  failonerror="false"/>
-                                      <copy todir="${webapps.dir}/adagio-admin">
-                                        <fileset dir="src/main/conf/adagio-admin"/>
-                                      </copy>
-                                      <delete file="${webapps.dir}/adagio-admin/WEB-INF/lib/ldap-1.1.jar"/>
-                                      <delete dir="${webapps.dir}/adagio-admin-${adagio-admin.version}-war"/>
-                                      <replaceregexp match="hibernate.show_sql&quot;&gt;true&lt;" replace="hibernate.show_sql&quot;&gt;false&lt;" flags="g" byline="true">
-                                          <fileset dir="${webapps.dir}/adagio-admin/WEB-INF/classes" includes="**/xeDB.spring.xml"/>
-                                      </replaceregexp>
+                    <!-- Patch the bin/catalina* scripts to include some of our jars in the classpath -->
 
-                                      <!-- Patch adagio synchro server -->
-                                      <copy todir="${webapps.dir}/adagio-synchro-server">
-                                          <fileset dir="src/main/conf/adagio-synchro-server"/>
-                                      </copy>
-                                      <dependencyfilesets/>
-                                      <copy todir="${webapps.dir}/adagio-synchro-server/WEB-INF/lib">
-                                          <fileset refid="log4j:log4j:jar"/>
-                                      </copy>
+                    <!-- Rename wars -->
+                    <move file="${webapps.dir}/adagio-synchro-server-${adagio-synchro-server.version}-war" tofile="${webapps.dir}/adagio-synchro-server" failonerror="false"/>
+                    <move file="${webapps.dir}/adagio-admin-${adagio-admin.version}-war" tofile="${webapps.dir}/adagio-admin" failonerror="false"/>
+                    <move file="${webapps.dir}/adagio-extractor-ui-${adagio-extractor.version}-war" tofile="${webapps.dir}/adagio-extractor" failonerror="false"/>
+                    <!--<move file="${webapps.dir}/cas-server-webapp-${cas.version}-ldap-war" tofile="${webapps.dir}/cas" failonerror="false"/>-->
 
-                                      <!-- Patch extractor -->
-                                      <copy todir="${webapps.dir}/adagio-extractor">
-                                          <fileset dir="src/main/conf/adagio-extractor"/>
-                                      </copy>
+                    <!-- Patch adagio-admin -->
+                    <if>
+                      <equals arg1="${adagio-admin.version}" arg2="2.5.8"/>
+                      <!-- Patch this version : replace LDAPServiceImpl class and add ldap-1.2 library -->
+                      <then>
+                        <move file="${webapps.dir}/adagio-admin/WEB-INF/classes/fr/ifremer/adagio/administration/service/impl/LDAPServiceImpl.class"
+                              tofile="${webapps.dir}/adagio-admin/WEB-INF/classes/fr/ifremer/adagio/administration/service/impl/LDAPServiceImpl.class_old" failonerror="false"/>
+                        <delete file="${webapps.dir}/adagio-admin/WEB-INF/lib/ldap-1.1.jar"/>
+                        <copy todir="${webapps.dir}/adagio-admin">
+                          <fileset dir="src/main/patch/adagio-admin"/>
+                        </copy>
+                      </then>
+                    </if>
+                    <!-- Configure adagio-admin -->
+                    <filterset id="adagio-admin-filterset">
+                      <filter value="${database.jdbc.url}" token="jdbcUrl"/>
+                      <filter value="${database.jdbc.username}" token="jdbcUsername"/>
+                      <filter value="${database.jdbc.password}" token="jdbcPassword"/>
+                      <filter value="${database.jdbc.cryptPassword}" token="jdbcCryptPassword"/>
+                    </filterset>                    <!-- default conf -->
+                    <copy todir="${webapps.dir}/adagio-admin">
+                      <filterset refid="adagio-admin-filterset"/>
+                      <fileset dir="src/main/conf/adagio-admin"/>
+                    </copy>
+                    <!-- env conf -->
+                    <copy todir="${webapps.dir}/adagio-admin" failonerror="false" overwrite="true">
+                      <filterset refid="adagio-admin-filterset"/>
+                      <fileset dir="src/main/env/${env}/adagio-admin"/>
+                    </copy>
 
-                                      <!-- Patch CAS server
-                                      <copy todir="${webapps.dir}/cas">
-                                          <fileset dir="src/main/conf/cas"/>
-                                      </copy>-->
+                    <delete dir="${webapps.dir}/adagio-admin-${adagio-admin.version}-war"/>
+                    <replaceregexp match="hibernate.show_sql&quot;&gt;true&lt;" replace="hibernate.show_sql&quot;&gt;false&lt;" flags="g" byline="true">
+                      <fileset dir="${webapps.dir}/adagio-admin/WEB-INF/classes" includes="**/xeDB.spring.xml"/>
+                    </replaceregexp>
 
-                                      <!-- Patch tomcat conf -->
-                                      <copy todir="${tomcat.dir}/">
-                                          <fileset dir="src/main/conf/tomcat"/>
-                                      </copy>
+                    <!-- Configure adagio synchro server -->
+                    <filterset id="adagio-synchro-server-filterset">
+                      <filter value="${database.jdbc.url}" token="jdbcUrl"/>
+                      <filter value="${database.jdbc.username}" token="jdbcUsername"/>
+                      <filter value="${database.jdbc.password}" token="jdbcPassword"/>
+                      <filter value="${tomcat.url}" token="serverUrl"/>
+                    </filterset>
+                    <!-- default conf -->
+                    <copy todir="${webapps.dir}/adagio-synchro-server">
+                      <filterset refid="adagio-synchro-server-filterset"/>
+                      <fileset dir="src/main/conf/adagio-synchro-server"/>
+                    </copy>
+                    <!-- env conf -->
+                    <copy todir="${webapps.dir}/adagio-synchro-server" failonerror="false" overwrite="true">
+                      <filterset refid="adagio-synchro-server-filterset"/>
+                      <fileset dir="src/main/env/${env}/adagio-synchro-server"/>
+                    </copy>
+                    <!-- add Log4j dep -->
+                    <dependencyfilesets/>
+                    <copy todir="${webapps.dir}/adagio-synchro-server/WEB-INF/lib">
+                      <fileset refid="log4j:log4j:jar"/>
+                    </copy>
 
-                                      <!-- Copy site into ROOT -->
-                                      <copy todir="${webapps.dir}/ROOT">
-                                          <fileset dir="src/main/site/" />
-                                      </copy>
+                    <!-- Configure extractor -->
+                    <filterset id="adagio-extractor-filterset">
+                      <filter value="${extractor.database.jdbc.url}" token="jdbcUrl"/>
+                      <filter value="${extractor.database.jdbc.username}" token="jdbcUsername"/>
+                      <filter value="${extractor.database.jdbc.password}" token="jdbcPassword"/>
+                      <filter value="${tomcat.url}" token="serverUrl"/>
+                    </filterset>
+                    <!-- default conf-->
+                    <copy todir="${webapps.dir}/adagio-extractor">
+                      <filterset refid="adagio-extractor-filterset"/>
+                      <fileset dir="src/main/conf/adagio-extractor"/>
+                    </copy>
+                    <!-- env conf -->
+                    <copy todir="${webapps.dir}/adagio-extractor" failonerror="false" overwrite="true">
+                      <filterset refid="adagio-extractor-filterset"/>
+                      <fileset dir="src/main/env/${env}/adagio-extractor"/>
+                    </copy>
 
+                    <!-- Patch CAS server
+                    <copy todir="${webapps.dir}/cas">
+                        <fileset dir="src/main/conf/cas"/>
+                    </copy>-->
 
-                                      <!-- touche (usefull if tomcat is started
-                                      <touch file="${webapps.dir}/adagio-admin/WEB-INF/web.xml"/>
-                                      <touch file="${webapps.dir}/cas/WEB-INF/web.xml"/>
-                                      <touch file="${webapps.dir}/adagio-synchro-server/WEB-INF/web.xml"/>
-                                      <touch file="${webapps.dir}/adagio-extractor/WEB-INF/web.xml"/-->
+                    <!-- Configure tomcat -->
+                    <filterset id="tomcat-filterset">
+                      <filter value="${tomcat.port}" token="serverPort"/>
+                    </filterset>
+                    <!-- default conf -->
+                    <copy todir="${tomcat.dir}/">
+                      <filterset refid="tomcat-filterset"/>
+                      <fileset dir="src/main/conf/tomcat"/>
+                    </copy>
+                    <!-- env conf -->
+                    <copy todir="${tomcat.dir}/" failonerror="false" overwrite="true">
+                      <filterset refid="tomcat-filterset"/>
+                      <fileset dir="src/main/env/${env}/tomcat"/>
+                    </copy>
 
-                                  </target>
-                              </configuration>
-                          </execution>
-
-                          <!-- Prepare ObsDeb update site -->
-                          <execution>
-                              <id>package-update-site-and-db</id>
-                              <phase>package</phase>
-                              <goals>
-                                  <goal>run</goal>
-                              </goals>
-
-                              <configuration>
-                                  <target>
-                                      <echo message="Packaging update site and HsqlDb..." />
-                                      <property name="updates.dir" value="${site.dir}/updates"/>
-
-                                      <!-- Remove previous dir -->
-                                      <delete includeEmptyDirs="true" failonerror="false">
-                                          <!-- keep plugin export zip -->
-                                          <fileset dir="${updates.dir}/allegro-obsdeb" excludes="t0403_product_OBSDEB_export*.*"/>
-                                      </delete>
-                                      <delete dir="${project.build.directory}/allegro-db" />
-
-                                      <!-- Get config and DB version-->
-                                      <tstamp>
-                                          <format property="config.version" pattern="yyyy.MM.dd" locale="fr,FR"/>
-                                      </tstamp>
-                                      <unzip
-                                              src="src/main/conf/allegro-obsdeb-update-site/db.zip"
-                                              dest="${project.build.directory}/allegro-db"
-                                              overwrite="true"/>
-                                      <fail message="Malformed db.zip: missing directory 'db' or file 'db/version.appup'"> <!-- Check db.zip structure -->
-                                          <condition>
-                                              <or>
-                                                <not><available file="${project.build.directory}/allegro-db/db"  type="dir"/></not>
-                                                <not><available file="${project.build.directory}/allegro-db/db/version.appup"  type="file"/></not>
-                                              </or>
-                                          </condition>
-                                      </fail>
-                                      <loadfile property="db.version" srcFile="${project.build.directory}/allegro-db/db/version.appup"/>
-
-                                      <copy todir="${updates.dir}/allegro-obsdeb"
-                                            filtering="true">
-                                          <filterset>
-                                              <filter value="${db.version}" token="dbVersion" />
-                                              <filter value="${allegro-obsdeb.jre.version}" token="jreVersion" />
-                                              <filter value="${tomcat.url}/updates/allegro-obsdeb/obsdeb-db-${db.version}.zip" token="dbUrl" />
-                                              <filter value="${tomcat.url}/updates/allegro-obsdeb/obsdeb-config.zip" token="configUrl" />
-                                              <filter value="${config.version}" token="configVersion" />
-                                              <filter value="${tomcat.url}/updates/allegro-obsdeb/t0403_product_OBSDEB_export-${allegro-obsdeb.export-plugin.version}.zip" token="exportPluginUrl" />
-                                              <filter value="${allegro-obsdeb.export-plugin.version}" token="exportPluginVersion" />
-                                              <filter value="${allegro-obsdeb.distributionUrl}" token="distributionUrl" />
-                                              <filter value="${allegro-obsdeb.version}" token="projectVersion" />
-                                              <filter value="${allegro-obsdeb.launcher.version}" token="launcherVersion" />
-                                          </filterset>
-                                          <fileset dir="src/main/conf/allegro-obsdeb-update-site" includes="*.properties"/>
-                                      </copy>
-                                      <copy file="src/main/conf/allegro-obsdeb-update-site/db.zip"
-                                            tofile="${updates.dir}/allegro-obsdeb/obsdeb-db-${db.version}.zip"/>
-
-                                      <!-- Create config ZIP file -->
-                                      <zip destfile="${updates.dir}/allegro-obsdeb/obsdeb-config.zip" update="false">
-                                          <zipfileset dir="src/main/conf/allegro-obsdeb" includes="config/**"/>
-                                      </zip>
-                                  </target>
-                              </configuration>
-                          </execution>
-                      </executions>
-                  </plugin>
-              </plugins>
-          </build>
-      </profile>
-
-      <profile>
-          <id>jboss</id>
-          <activation>
-              <property>
-                  <name>jboss.skip</name>
-                  <value>!true</value>
-              </property>
-          </activation>
-          <dependencies>
-              <dependency>
-                  <groupId>org.jboss.as</groupId>
-                  <artifactId>jboss</artifactId>
-                  <version>${jboss.version}</version>
-                  <type>zip</type>
-              </dependency>
-          </dependencies>
-          <build>
-              <defaultGoal>package</defaultGoal>
-              <plugins>
-                  <plugin>
-                      <artifactId>maven-dependency-plugin</artifactId>
-                      <executions>
-                          <execution>
-                              <id>unpack-jboss</id>
-                              <phase>prepare-package</phase>
-                              <goals>
-                                  <goal>unpack-dependencies</goal>
-                              </goals>
-                              <configuration>
-                                  <outputDirectory>${project.build.directory}</outputDirectory>
-                                  <includeArtifactIds>jboss</includeArtifactIds>
-                              </configuration>
-                          </execution>
-
-                          <execution>
-                              <id>copy-jboss-ears</id>
-                              <phase>prepare-package</phase>
-                              <goals>
-                                  <goal>copy-dependencies</goal>
-                              </goals>
-                              <configuration>
-                                  <outputDirectory>${project.build.directory}/jboss-${jboss.version}/server/default/deploy</outputDirectory>
-                                  <includeArtifactIds>
-                                      allegro-remote-q2,
-                                      allegro-remote
-                                  </includeArtifactIds>
-                              </configuration>
-                          </execution>
-
-                          <execution>
-                              <id>copy-jboss-libs</id>
-                              <phase>prepare-package</phase>
-                              <goals>
-                                  <goal>copy-dependencies</goal>
-                              </goals>
-                              <configuration>
-                                  <outputDirectory>${project.build.directory}/jboss-${jboss.version}/server/default/lib</outputDirectory>
-                                  <silent>true</silent>
-                                  <includeArtifactIds>
-                                      ojdbc7
-                                  </includeArtifactIds>
-                              </configuration>
-                          </execution>
-                      </executions>
-                  </plugin>
-
-                  <plugin>
-                      <artifactId>maven-antrun-plugin</artifactId>
-                      <executions>
-                          <execution>
-                              <id>repackage-jboss</id>
-                              <phase>package</phase>
-                              <goals>
-                                  <goal>run</goal>
-                              </goals>
-
-                              <configuration>
-                                  <target>
-                                      <echo message="Re-packaging jboss..." />
-
-                                      <!-- Set EAR classloader isolation  -->
-                                      <copy todir="${jboss.dir}/">
-                                          <fileset dir="src/main/conf/jboss"/>
-                                      </copy>
-
-                                      <!-- Remove unused ear - TODO ?
-                                      <delete dir="${jboss.deploy.dir}/xxx" /> -->
-
-                                      <!-- Patch the bin/catalina* scripts to include some of our jars in the classpath -->
-
-                                      <!-- Rename ears -->
-                                      <move file="${jboss.deploy.dir}/allegro-remote-q2-${allegro-q2.version}.ear" tofile="${jboss.deploy.dir}/allegro-remote-q2.ear" failonerror="false"/>
-                                      <move file="${jboss.deploy.dir}/allegro-remote-q2-${allegro-q2.version}-activeDirectory.ear" tofile="${jboss.deploy.dir}/allegro-remote-q2.ear" failonerror="false"/>
-                                      <move file="${jboss.deploy.dir}/allegro-remote-${allegro.version}.ear" tofile="${jboss.deploy.dir}/allegro-remote.ear" failonerror="false"/>
-                                      <move file="${jboss.deploy.dir}/allegro-remote-${allegro.version}-noldap.ear" tofile="${jboss.deploy.dir}/allegro-remote.ear" failonerror="false"/>
-                                  </target>
-                              </configuration>
-                          </execution>
-                      </executions>
-                  </plugin>
-              </plugins>
-          </build>
-      </profile>
+                    <!-- Copy site into ROOT -->
+                    <copy todir="${site.dir}">
+                      <fileset dir="src/main/site/${env}"/>
+                    </copy>
 
 
-      <profile>
-          <id>clients</id>
-          <activation>
-              <property>
-                  <name>clients.skip</name>
-                  <value>!true</value>
-              </property>
-          </activation>
-          <build>
-              <defaultGoal>package</defaultGoal>
-              <plugins>
-                  <plugin>
-                      <artifactId>maven-dependency-plugin</artifactId>
-                      <executions>
-                          <execution>
-                              <id>unpack-clients</id>
-                              <phase>prepare-package</phase>
-                              <goals>
-                                  <goal>unpack-dependencies</goal>
-                              </goals>
-                              <configuration>
-                                  <outputDirectory>${project.build.directory}/clients</outputDirectory>
-                                  <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
-                                  <includeArtifactIds>
-                                      obsdeb-ui-swing,
-                                      adagio-extractor-ui,
-                                      allegro-q2,
-                                      allegro,
-                                      t0403_product_OBSDEB_export
-                                  </includeArtifactIds>
-                                  <excludeTypes>
-                                      war
-                                  </excludeTypes>
-                              </configuration>
-                          </execution>
-                      </executions>
-                  </plugin>
+                    <!-- touche (usefull if tomcat is started -->
+                    <touch file="${webapps.dir}/adagio-admin/WEB-INF/web.xml"/>
+                    <!--<touch file="${webapps.dir}/cas/WEB-INF/web.xml"/>-->
+                    <touch file="${webapps.dir}/adagio-synchro-server/WEB-INF/web.xml"/>
+                    <touch file="${webapps.dir}/adagio-extractor/WEB-INF/web.xml"/>
 
-                  <plugin>
-                      <artifactId>maven-antrun-plugin</artifactId>
-                      <executions>
-                          <execution>
-                              <id>configure-clients</id>
-                              <phase>package</phase>
-                              <goals>
-                                  <goal>run</goal>
-                              </goals>
+                  </target>
+                </configuration>
+              </execution>
 
-                              <configuration>
-                                  <target>
-                                      <taskdef resource="net/sf/antcontrib/antlib.xml">
-                                          <classpath refid="maven.plugin.classpath" />
-                                      </taskdef>
+              <!-- Prepare ObsDeb update site -->
+              <execution>
+                <id>package-update-site-and-db</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
 
-                                      <!-- ObsDeb -->
-                                      <echo message="Configuring ObsDeb..." />
-                                      <property name="obsdeb.dir" location="${clients.dir}/allegro-obsdeb"/>
-                                      <move file="${clients.dir}/obsdeb-ui-swing-${allegro-obsdeb.version}-${allegro-obsdeb.classifier}-zip/allegro-obsdeb-${allegro-obsdeb.version}" tofile="${obsdeb.dir}" failonerror="false"/>
-                                      <delete dir="${clients.dir}/obsdeb-ui-swing-${allegro-obsdeb.version}-${allegro-obsdeb.classifier}-zip" includeEmptyDirs="true" failonerror="false"/>
-                                      <copy todir="${clients.dir}/allegro-obsdeb">
-                                          <fileset dir="src/main/conf/allegro-obsdeb" />
-                                      </copy>
-                                      <move file="${clients.dir}/t0403_product_OBSDEB_export-${allegro-obsdeb.export-plugin.version}-zip/t0403_product_OBSDEB_export" tofile="${obsdeb.dir}/plugins/t0403_product_OBSDEB_export" failonerror="false"/>
-                                      <echo file="${obsdeb.dir}/plugins/t0403_product_OBSDEB_export/version.appup" append="false">${allegro-obsdeb.export-plugin.version}</echo>
-                                      <delete dir="${clients.dir}/allegro-obsdeb/data"/>
-                                      <unzip src="src/main/conf/allegro-obsdeb-update-site/db.zip"
-                                             dest="${clients.dir}/allegro-obsdeb/data"
-                                             overwrite="true"/>
-                                      <zip destfile="${site.dir}/downloads/allegro-obsdeb.zip" update="false">
-                                          <zipfileset dir="${clients.dir}/allegro-obsdeb" includes="**/*"/>
-                                      </zip>
+                <configuration>
+                  <target>
+                    <echo message="Packaging update site and HsqlDb..."/>
+                    <property name="updates.dir" value="${site.dir}/updates"/>
+                    <property name="db.file" value="src/main/env/${env}/allegro-obsdeb-db/db.zip"/>
 
-                                      <!-- Allegro-q2 -->
-                                      <echo message="Configuring Allegro-q2..." />
-                                      <property name="allegro-q2.dir" location="${clients.dir}/allegro-q2"/>
-                                      <move file="${clients.dir}/allegro-q2-${allegro-q2.version}-zip" tofile="${allegro-q2.dir}" failonerror="false"/>
+                    <!-- Remove previous dir -->
+                    <delete includeEmptyDirs="true" failonerror="false">
+                      <!-- keep plugin export zip -->
+                      <fileset dir="${updates.dir}/allegro-obsdeb" excludes="t0403_product_OBSDEB_export*.*"/>
+                    </delete>
+                    <delete dir="${project.build.directory}/allegro-db"/>
 
-                                      <!-- Patch the fr.ifremer.quadrige2.common plugin (change properties to access the server) -->
-                                      <loadproperties srcFile="src/main/conf/allegro-q2/plugins/fr.ifremer.quadrige2.common/serverconfig.properties"/>
-                                      <fail unless="intranetServerURL"/>
-                                      <fail unless="extranetServerURL"/>
-                                      <fail unless="editingContextServerURL"/>
-                                      <for param="file">
-                                          <path>
-                                              <fileset dir="${allegro-q2.dir}/plugins" includes="fr.ifremer.quadrige2.common_*.jar"/>
-                                          </path>
-                                          <sequential>
-                                              <property name="plugin_common.dir" value="@{file}"/>
-                                              <propertyregex
-                                                      input="${plugin_common.dir}"
-                                                      regexp="(.*)[.]jar"
-                                                      select="\1"
-                                                      property="plugin_common.dir"
-                                                      override="true"/>
-                                          </sequential>
-                                      </for>
-                                      <if>
-                                          <available file="${plugin_common.dir}.jar"/>
-                                          <then>
-                                              <mkdir dir="${plugin_common.dir}"/>
-                                              <unzip
-                                                      src="${plugin_common.dir}.jar"
-                                                      dest="${plugin_common.dir}"
-                                                      overwrite="true"/>
-                                          </then>
-                                          <else>
-                                              <for param="file">
-                                                  <path>
-                                                      <dirset dir="${allegro-q2.dir}/plugins" includes="fr.ifremer.quadrige2.common_*"/>
-                                                  </path>
-                                                  <sequential>
-                                                      <property name="plugin_common.dir" value="@{file}"/>
-                                                      <propertyregex
-                                                              input="${plugin_common.dir}"
-                                                              regexp="(.*)[.]jar"
-                                                              select="\1"
-                                                              property="plugin_common.dir"
-                                                              override="true"/>
-                                                  </sequential>
-                                              </for>
-                                          </else>
-                                      </if>
-                                      <propertyfile
-                                              file="${plugin_common.dir}\fr\ifremer\quadrige2\common\servermanager\serverconfig.properties">
-                                          <entry key="intranetServerURL" value="${intranetServerURL}"/>
-                                          <entry key="extranetServerURL" value="${extranetServerURL}"/>
-                                          <entry key="editingContextServerURL" value="${editingContextServerURL}"/>
-                                      </propertyfile>
-                                      <delete file="${plugin_common.dir}.jar"></delete>
-                                      <zip destfile="${plugin_common.dir}.jar" update="false">
-                                          <zipfileset dir="${plugin_common.dir}"/>
-                                      </zip>
-                                      <delete dir="${plugin_common.dir}"/>
-                                      <zip destfile="${site.dir}/downloads/allegro-q2.zip" update="false">
-                                          <zipfileset dir="${clients.dir}/allegro-q2" includes="**/*"/>
-                                      </zip>
+                    <!-- Get config and DB version-->
+                    <tstamp>
+                      <format property="config.version" pattern="yyyy.MM.dd" locale="fr,FR"/>
+                    </tstamp>
+                    <unzip
+                        src="${db.file}"
+                        dest="${project.build.directory}/allegro-db"
+                        overwrite="true"/>
+                    <fail message="Malformed db.zip: missing directory 'db' or file 'db/version.appup'"> <!-- Check db.zip structure -->
+                      <condition>
+                        <or>
+                          <not>
+                            <available file="${project.build.directory}/allegro-db/db" type="dir"/>
+                          </not>
+                          <not>
+                            <available file="${project.build.directory}/allegro-db/db/version.appup" type="file"/>
+                          </not>
+                        </or>
+                      </condition>
+                    </fail>
+                    <loadfile property="db.version" srcFile="${project.build.directory}/allegro-db/db/version.appup"/>
 
-                                      <!-- Allegro -->
-                                      <echo message="Configuring Allegro..." />
-                                      <property name="allegro.dir" location="${clients.dir}/allegro"/>
-                                      <move file="${clients.dir}/allegro-${allegro.version}-zip" tofile="${allegro.dir}" failonerror="false"/>
-                                      <for param="file">
-                                          <path>
-                                              <dirset dir="${allegro.dir}/plugins" includes="fr.ifremer.allegro.configuration_*"/>
-                                          </path>
-                                          <sequential>
-                                              <property name="plugin_config.dir" value="@{file}"/>
-                                              <propertyregex
-                                                      input="${plugin_config.dir}"
-                                                      regexp="(.*)[.]jar"
-                                                      select="\1"
-                                                      property="plugin_config.dir"
-                                                      override="true"/>
-                                          </sequential>
-                                      </for>
-                                      <copy todir="${plugin_config.dir}/">
-                                          <fileset dir="src/main/conf/allegro/plugins/fr.ifremer.allegro.configuration" />
-                                      </copy>
-                                      <zip destfile="${site.dir}/downloads/allegro.zip" update="false">
-                                          <zipfileset dir="${clients.dir}/allegro" includes="**/*"/>
-                                      </zip>
+                    <copy todir="${updates.dir}/allegro-obsdeb"
+                          filtering="true">
+                      <filterset>
+                        <filter value="${db.version}" token="dbVersion"/>
+                        <filter value="${allegro-obsdeb.jre.version}" token="jreVersion"/>
+                        <filter value="${tomcat.url}/updates/allegro-obsdeb/obsdeb-db-${db.version}.zip" token="dbUrl"/>
+                        <filter value="${tomcat.url}/updates/allegro-obsdeb/obsdeb-config.zip" token="configUrl"/>
+                        <filter value="${config.version}" token="configVersion"/>
+                        <filter value="${tomcat.url}/updates/allegro-obsdeb/t0403_product_OBSDEB_export-${allegro-obsdeb.export-plugin.version}.zip" token="exportPluginUrl"/>
+                        <filter value="${allegro-obsdeb.export-plugin.version}" token="exportPluginVersion"/>
+                        <filter value="${allegro-obsdeb.distributionUrl}" token="distributionUrl"/>
+                        <filter value="${allegro-obsdeb.version}" token="projectVersion"/>
+                        <filter value="${allegro-obsdeb.launcher.version}" token="launcherVersion"/>
+                      </filterset>
+                      <fileset dir="src/main/conf/allegro-obsdeb-update-site" includes="*.properties"/>
+                    </copy>
+                    <copy file="${db.file}"
+                          tofile="${updates.dir}/allegro-obsdeb/obsdeb-db-${db.version}.zip"/>
 
-                                      <!-- Adagio extractor Batch -->
-                                      <echo message="Configuring Adagio-extractor Batch..." />
-                                      <property name="adagio-extractor-batch.dir" value="${project.build.directory}/adagio-extractor-batch"/>
-                                      <move file="${clients.dir}/adagio-extractor-ui-${adagio-extractor.version}-standalone-zip/adagio-extractor-${adagio-extractor.version}" tofile="${adagio-extractor-batch.dir}"  failonerror="false"/>
-                                      <delete dir="${clients.dir}/adagio-extractor-ui-${adagio-extractor.version}-standalone-zip"  failonerror="false"/>
-                                      <copy todir="${adagio-extractor-batch.dir}">
-                                          <fileset dir="src/main/conf/adagio-extractor-batch" />
-                                      </copy>
-                                  </target>
-                              </configuration>
-                          </execution>
-                      </executions>
-                  </plugin>
-              </plugins>
-          </build>
-      </profile>
+                    <!-- Create config ZIP file -->
+                    <copy todir="${updates.dir}/allegro-obsdeb/obsdeb-config">
+                      <filterset>
+                        <filter value="${database.jdbc.url}" token="jdbcUrl"/>
+                        <filter value="${database.jdbc.username}" token="jdbcUsername"/>
+                        <filter value="${database.jdbc.password}" token="jdbcPassword"/>
+                        <filter value="${tomcat.url}" token="serverUrl"/>
+                      </filterset>
+                      <fileset dir="src/main/env/${env}/allegro-obsdeb/config"/>
+                    </copy>
+                    <zip destfile="${updates.dir}/allegro-obsdeb/obsdeb-config.zip" update="false">
+                      <zipfileset dir="${updates.dir}/allegro-obsdeb/obsdeb-config"/>
+                    </zip>
+                    <delete dir="${updates.dir}/allegro-obsdeb/obsdeb-config"/>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>jboss</id>
+      <activation>
+        <property>
+          <name>jboss.skip</name>
+          <value>!true</value>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.as</groupId>
+          <artifactId>jboss</artifactId>
+          <version>${jboss.version}</version>
+          <type>zip</type>
+        </dependency>
+      </dependencies>
+      <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack-jboss</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>unpack-dependencies</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                  <includeArtifactIds>jboss</includeArtifactIds>
+                </configuration>
+              </execution>
+
+              <execution>
+                <id>copy-jboss-ears</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/jboss-${jboss.version}/server/default/deploy</outputDirectory>
+                  <includeArtifactIds>
+                    allegro-remote-q2,
+                    allegro-remote
+                  </includeArtifactIds>
+                </configuration>
+              </execution>
+
+              <execution>
+                <id>copy-jboss-libs</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/jboss-${jboss.version}/server/default/lib</outputDirectory>
+                  <silent>true</silent>
+                  <includeArtifactIds>
+                    ojdbc7
+                  </includeArtifactIds>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>repackage-jboss</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+
+                <configuration>
+                  <target>
+                    <echo message="Re-packaging jboss..."/>
+
+                    <!-- Set EAR classloader isolation  -->
+                    <copy todir="${jboss.dir}/">
+                      <fileset dir="src/main/conf/jboss"/>
+                    </copy>
+
+                    <!-- Remove unused ear - TODO ?
+                    <delete dir="${jboss.deploy.dir}/xxx" /> -->
+
+                    <!-- Patch the bin/catalina* scripts to include some of our jars in the classpath -->
+
+                    <!-- Rename ears -->
+                    <move file="${jboss.deploy.dir}/allegro-remote-q2-${allegro-q2.version}.ear" tofile="${jboss.deploy.dir}/allegro-remote-q2.ear" failonerror="false"/>
+                    <move file="${jboss.deploy.dir}/allegro-remote-q2-${allegro-q2.version}-activeDirectory.ear" tofile="${jboss.deploy.dir}/allegro-remote-q2.ear" failonerror="false"/>
+                    <move file="${jboss.deploy.dir}/allegro-remote-${allegro.version}.ear" tofile="${jboss.deploy.dir}/allegro-remote.ear" failonerror="false"/>
+                    <move file="${jboss.deploy.dir}/allegro-remote-${allegro.version}-noldap.ear" tofile="${jboss.deploy.dir}/allegro-remote.ear" failonerror="false"/>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>clients</id>
+      <activation>
+        <property>
+          <name>clients.skip</name>
+          <value>!true</value>
+        </property>
+      </activation>
+      <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack-clients</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>unpack-dependencies</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/clients</outputDirectory>
+                  <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
+                  <includeArtifactIds>
+                    obsdeb-ui-swing,
+                    adagio-extractor-ui,
+                    allegro-q2,
+                    allegro,
+                    t0403_product_OBSDEB_export
+                  </includeArtifactIds>
+                  <excludeTypes>
+                    war
+                  </excludeTypes>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>configure-clients</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+
+                <configuration>
+                  <target>
+                    <taskdef resource="net/sf/antcontrib/antlib.xml">
+                      <classpath refid="maven.plugin.classpath"/>
+                    </taskdef>
+
+                    <!-- ObsDeb -->
+                    <echo message="Configuring ObsDeb..."/>
+                    <property name="obsdeb.dir" location="${clients.dir}/allegro-obsdeb"/>
+                    <move file="${clients.dir}/obsdeb-ui-swing-${allegro-obsdeb.version}-${allegro-obsdeb.classifier}-zip/allegro-obsdeb-${allegro-obsdeb.version}" tofile="${obsdeb.dir}"
+                          failonerror="false"/>
+                    <delete dir="${clients.dir}/obsdeb-ui-swing-${allegro-obsdeb.version}-${allegro-obsdeb.classifier}-zip" includeEmptyDirs="true" failonerror="false"/>
+                    <copy todir="${obsdeb.dir}">
+                      <filterset>
+                        <filter value="${database.jdbc.url}" token="jdbcUrl"/>
+                        <filter value="${database.jdbc.username}" token="jdbcUsername"/>
+                        <filter value="${database.jdbc.password}" token="jdbcPassword"/>
+                        <filter value="${tomcat.url}" token="serverUrl"/>
+                      </filterset>
+                      <fileset dir="src/main/env/${env}/allegro-obsdeb"/>
+                    </copy>
+                    <move file="${clients.dir}/t0403_product_OBSDEB_export-${allegro-obsdeb.export-plugin.version}-zip/t0403_product_OBSDEB_export"
+                          tofile="${obsdeb.dir}/plugins/t0403_product_OBSDEB_export" failonerror="false"/>
+                    <echo file="${obsdeb.dir}/plugins/t0403_product_OBSDEB_export/version.appup" append="false">${allegro-obsdeb.export-plugin.version}</echo>
+                    <delete dir="${obsdeb.dir}/data"/>
+                    <unzip src="src/main/env/${env}/allegro-obsdeb-db/db.zip"
+                           dest="${obsdeb.dir}/data"
+                           overwrite="true"/>
+                    <zip destfile="${site.dir}/downloads/allegro-obsdeb.zip" update="false">
+                      <zipfileset dir="${obsdeb.dir}" includes="**/*"/>
+                    </zip>
+
+                    <!-- Allegro-q2 -->
+                    <echo message="Configuring Allegro-q2..."/>
+                    <property name="allegro-q2.dir" location="${clients.dir}/allegro-q2"/>
+                    <move file="${allegro-q2.dir}-${allegro-q2.version}-zip" tofile="${allegro-q2.dir}" failonerror="false"/>
+
+                    <!-- Patch the fr.ifremer.quadrige2.common plugin (change properties to access the server) -->
+                    <loadproperties srcFile="src/main/conf/allegro-q2/plugins/fr.ifremer.quadrige2.common/serverconfig.properties">
+                      <filterchain>
+                        <replacetokens>
+                          <token key="serverUrl" value="${tomcat.url}"/>
+                        </replacetokens>
+                      </filterchain>
+                    </loadproperties>
+                    <fail unless="intranetServerURL"/>
+                    <fail unless="extranetServerURL"/>
+                    <fail unless="editingContextServerURL"/>
+                    <for param="file">
+                      <path>
+                        <fileset dir="${allegro-q2.dir}/plugins" includes="fr.ifremer.quadrige2.common_*.jar"/>
+                      </path>
+                      <sequential>
+                        <property name="plugin_common.dir" value="@{file}"/>
+                        <propertyregex
+                            input="${plugin_common.dir}"
+                            regexp="(.*)[.]jar"
+                            select="\1"
+                            property="plugin_common.dir"
+                            override="true"/>
+                      </sequential>
+                    </for>
+                    <if>
+                      <available file="${plugin_common.dir}.jar"/>
+                      <then>
+                        <mkdir dir="${plugin_common.dir}"/>
+                        <unzip
+                            src="${plugin_common.dir}.jar"
+                            dest="${plugin_common.dir}"
+                            overwrite="true"/>
+                      </then>
+                      <else>
+                        <for param="file">
+                          <path>
+                            <dirset dir="${allegro-q2.dir}/plugins" includes="fr.ifremer.quadrige2.common_*"/>
+                          </path>
+                          <sequential>
+                            <property name="plugin_common.dir" value="@{file}"/>
+                            <propertyregex
+                                input="${plugin_common.dir}"
+                                regexp="(.*)[.]jar"
+                                select="\1"
+                                property="plugin_common.dir"
+                                override="true"/>
+                          </sequential>
+                        </for>
+                      </else>
+                    </if>
+                    <propertyfile
+                        file="${plugin_common.dir}\fr\ifremer\quadrige2\common\servermanager\serverconfig.properties">
+                      <entry key="intranetServerURL" value="${intranetServerURL}"/>
+                      <entry key="extranetServerURL" value="${extranetServerURL}"/>
+                      <entry key="editingContextServerURL" value="${editingContextServerURL}"/>
+                    </propertyfile>
+                    <delete file="${plugin_common.dir}.jar"/>
+                    <zip destfile="${plugin_common.dir}.jar" update="false">
+                      <zipfileset dir="${plugin_common.dir}"/>
+                    </zip>
+                    <delete dir="${plugin_common.dir}"/>
+                    <zip destfile="${site.dir}/downloads/allegro-q2.zip" update="false">
+                      <zipfileset dir="${allegro-q2.dir}" includes="**/*"/>
+                    </zip>
+
+                    <!-- Allegro -->
+                    <echo message="Configuring Allegro..."/>
+                    <property name="allegro.dir" location="${clients.dir}/allegro"/>
+                    <move file="${allegro.dir}-${allegro.version}-zip" tofile="${allegro.dir}" failonerror="false"/>
+                    <for param="file">
+                      <path>
+                        <dirset dir="${allegro.dir}/plugins" includes="fr.ifremer.allegro.configuration_*"/>
+                      </path>
+                      <sequential>
+                        <property name="plugin_config.dir" value="@{file}"/>
+                        <propertyregex
+                            input="${plugin_config.dir}"
+                            regexp="(.*)[.]jar"
+                            select="\1"
+                            property="plugin_config.dir"
+                            override="true"/>
+                      </sequential>
+                    </for>
+                    <!-- default conf -->
+                    <copy todir="${plugin_config.dir}/">
+                      <filterset>
+                        <filter value="${tomcat.url}" token="serverUrl"/>
+                      </filterset>
+                      <fileset dir="src/main/conf/allegro/plugins/fr.ifremer.allegro.configuration"/>
+                    </copy>
+                    <!-- env conf -->
+                    <copy todir="${plugin_config.dir}/" failonerror="false" overwrite="true">
+                      <fileset dir="src/main/env/${env}/allegro/plugins/fr.ifremer.allegro.configuration"/>
+                    </copy>
+                    <zip destfile="${site.dir}/downloads/allegro.zip" update="false">
+                      <zipfileset dir="${allegro.dir}" includes="**/*"/>
+                    </zip>
+
+                    <!-- Adagio extractor Batch -->
+                    <echo message="Configuring Adagio-extractor Batch..."/>
+                    <property name="adagio-extractor-batch.dir" value="${project.build.directory}/adagio-extractor-batch"/>
+                    <move file="${clients.dir}/adagio-extractor-ui-${adagio-extractor.version}-standalone-zip/adagio-extractor-${adagio-extractor.version}" tofile="${adagio-extractor-batch.dir}"
+                          failonerror="false"/>
+                    <delete dir="${clients.dir}/adagio-extractor-ui-${adagio-extractor.version}-standalone-zip" failonerror="false"/>
+                    <copy todir="${adagio-extractor-batch.dir}">
+                      <filterset>
+                        <filter value="${extractor.database.jdbc.url}" token="jdbcUrl"/>
+                        <filter value="${extractor.database.jdbc.username}" token="jdbcUsername"/>
+                        <filter value="${extractor.database.jdbc.password}" token="jdbcPassword"/>
+                        <filter value="${tomcat.url}" token="serverUrl"/>
+                      </filterset>
+                      <fileset dir="src/main/env/${env}/adagio-extractor-batch"/>
+                    </copy>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
 
   </profiles>
 </project>

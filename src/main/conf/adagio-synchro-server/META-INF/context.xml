@@ -27,12 +27,12 @@
       auth="Container"
       type="javax.sql.DataSource"
       driverClassName="oracle.jdbc.driver.OracleDriver"
-      url="jdbc:oracle:thin:@10.9.8.153:1521:ORACLE"
-      username="SIH2_ADAGIO_DBA"
-      password="SIH2_ADAGIO_DBA"
-      maxActive="5"
+      url="@jdbcUrl@"
+      username="@jdbcUsername@"
+      password="@jdbcPassword@"
+      maxTotal="5"
       maxIdle="2"
-      maxWait="-1"
+      maxWaitMillis="-1"
     />
 
   <!-- Use to set the configuration file path (default path is: <WAR>/WEB-INF/classes/synchro-server.config) -->
