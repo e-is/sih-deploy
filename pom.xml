@@ -444,6 +444,42 @@
                   <regex>test|sfa</regex>
                   <regexMessage>The 'env' property must be one of {test,sfa}.</regexMessage>
                 </requireProperty>
+                <requireProperty>
+                  <property>database.jdbc.url</property>
+                  <message>You must set database.jdbc.url</message>
+                </requireProperty>
+                <requireProperty>
+                  <property>database.jdbc.username</property>
+                  <message>You must set database.jdbc.username</message>
+                </requireProperty>
+                <requireProperty>
+                  <property>database.jdbc.password</property>
+                  <message>You must set database.jdbc.password</message>
+                </requireProperty>
+                <requireProperty>
+                  <property>database.jdbc.cryptPassword</property>
+                  <message>You must set database.jdbc.cryptPassword</message>
+                </requireProperty>
+                <requireProperty>
+                  <property>extractor.database.jdbc.url</property>
+                  <message>You must set extractor.database.jdbc.url</message>
+                </requireProperty>
+                <requireProperty>
+                  <property>extractor.database.jdbc.username</property>
+                  <message>You must set extractor.database.jdbc.username</message>
+                </requireProperty>
+                <requireProperty>
+                  <property>extractor.database.jdbc.password</property>
+                  <message>You must set extractor.database.jdbc.password</message>
+                </requireProperty>
+                <requireProperty>
+                  <property>ldap.manager.username</property>
+                  <message>You must set ldap.manager.username</message>
+                </requireProperty>
+                <requireProperty>
+                  <property>ldap.manager.password</property>
+                  <message>You must set ldap.manager.password</message>
+                </requireProperty>
               </rules>
               <fail>true</fail>
             </configuration>
@@ -1233,8 +1269,6 @@
                           value="-Dadagio-core-server.config=./conf/adagio-core-server.config -jar"/>
                       </then>
                     </if>
-
-
                   </target>
                 </configuration>
               </execution>
