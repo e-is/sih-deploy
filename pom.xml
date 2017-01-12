@@ -92,7 +92,7 @@
     <allegro-obsdeb.jre.version>1.8.77</allegro-obsdeb.jre.version>
     <allegro-obsdeb.classifier>full-windows-i586</allegro-obsdeb.classifier>
     <allegro-obsdeb.export-plugin.version>0.9</allegro-obsdeb.export-plugin.version>
-    <allegro-obsdeb.distributionUrl>http://www.ifremer.fr/maven/repository</allegro-obsdeb.distributionUrl>
+    <!--<allegro-obsdeb.distributionUrl>http://www.ifremer.fr/maven/repository</allegro-obsdeb.distributionUrl>-->
 
     <allegro-q2.version>2.3.5e</allegro-q2.version>
     <allegro-remote-q2.classifier>activeDirectory</allegro-remote-q2.classifier>
@@ -208,6 +208,36 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>fr.ifremer.allegro.obsdeb</groupId>
+      <artifactId>obsdeb-ui-swing</artifactId>
+      <version>${allegro-obsdeb.version}</version>
+      <classifier>standalone</classifier>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>fr.ifremer.allegro.obsdeb</groupId>
+      <artifactId>obsdeb-ui-swing</artifactId>
+      <version>${allegro-obsdeb.version}</version>
+      <classifier>i18n</classifier>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>fr.ifremer.allegro.obsdeb</groupId>
+      <artifactId>obsdeb-ui-swing</artifactId>
+      <version>${allegro-obsdeb.version}</version>
+      <classifier>help</classifier>
+      <type>zip</type>
+    </dependency>
+    <!-- launcher Obsdeb-->
+    <dependency>
+      <groupId>fr.ifremer.allegro.obsdeb</groupId>
+      <artifactId>obsdeb-ui-swing-launcher</artifactId>
+      <version>${allegro-obsdeb.launcher.version}</version>
+      <classifier>bin</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
       <groupId>fr.ifremer.adagio</groupId>
       <artifactId>adagio-synchro-server</artifactId>
       <version>${adagio-synchro-server.version}</version>
@@ -218,6 +248,20 @@
           <artifactId>*</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.oracle</groupId>
+      <artifactId>jre</artifactId>
+      <version>${allegro-obsdeb.jre.version}</version>
+      <type>zip</type>
+      <classifier>windows-i586</classifier>
+    </dependency>
+    <dependency>
+      <groupId>com.oracle</groupId>
+      <artifactId>jre</artifactId>
+      <version>${allegro-obsdeb.jre.version}</version>
+      <type>zip</type>
+      <classifier>windows-x64</classifier>
     </dependency>
 
     <!-- Allegro-q2 -->
@@ -532,21 +576,47 @@
               </execution>
 
               <execution>
-                <id>unpack-obsdeb-plugins</id>
+                <id>copy-obsdeb-plugins</id>
                 <phase>prepare-package</phase>
                 <goals>
                   <goal>copy-dependencies</goal>
                 </goals>
                 <configuration>
-                  <!--<overWriteReleases>true</overWriteReleases>-->
-                  <!--<overWriteSnapshots>true</overWriteSnapshots>-->
-                  <!--<overWriteIfNewer>true</overWriteIfNewer>-->
-                  <outputDirectory>${site.dir}/updates/allegro-obsdeb</outputDirectory>
-                  <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
-                  <!--<silent>false</silent>-->
+                  <outputDirectory>${project.build.directory}/obsdeb-plugins</outputDirectory>
+                  <!--<useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>-->
                   <includeArtifactIds>
                     t0403_product_OBSDEB_export
                   </includeArtifactIds>
+                </configuration>
+              </execution>
+
+              <execution>
+                <id>copy-obsdeb-update-artifacts</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/obsdeb-artifacts</outputDirectory>
+                  <includeArtifactIds>
+                    obsdeb-ui-swing,obsdeb-ui-swing-launcher
+                  </includeArtifactIds>
+                  <includeClassifiers>standalone,i18n,help,bin</includeClassifiers>
+                </configuration>
+              </execution>
+
+              <execution>
+                <id>get-windows-i586-jre</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>
+                    ${project.build.directory}/jre
+                  </outputDirectory>
+                  <includeArtifactIds>jre</includeArtifactIds>
+                  <includeClassifiers>windows-i586,windows-x64</includeClassifiers>
                 </configuration>
               </execution>
             </executions>
@@ -710,14 +780,11 @@
                 <configuration>
                   <target>
                     <echo message="Packaging update site and HsqlDb..."/>
-                    <property name="updates.dir" value="${site.dir}/updates"/>
+                    <property name="updates.dir" value="${site.dir}/updates/allegro-obsdeb"/>
                     <property name="db.file" value="src/main/env/${env}/allegro-obsdeb-db/db.zip"/>
 
                     <!-- Remove previous dir -->
-                    <delete includeEmptyDirs="true" failonerror="false">
-                      <!-- keep plugin export zip -->
-                      <fileset dir="${updates.dir}/allegro-obsdeb" excludes="t0403_product_OBSDEB_export*.*"/>
-                    </delete>
+                    <delete dir="${updates.dir}" includeEmptyDirs="true" failonerror="false"/>
                     <delete dir="${project.build.directory}/allegro-db"/>
 
                     <!-- Get config and DB version-->
@@ -742,27 +809,42 @@
                     </fail>
                     <loadfile property="db.version" srcFile="${project.build.directory}/allegro-db/db/version.appup"/>
 
-                    <copy todir="${updates.dir}/allegro-obsdeb"
+                    <!-- Copy jre, update artifacts and plugins -->
+                    <move toDir="${updates.dir}">
+                      <fileset dir="${project.build.directory}/jre" />
+                      <fileset dir="${project.build.directory}/obsdeb-artifacts" excludes="*.exe" />
+                      <fileset dir="${project.build.directory}/obsdeb-plugins" />
+                    </move>
+                    <delete dir="${project.build.directory}/jre"/>
+
+                    <!-- Configure obsdeb-application & obsdeb-data files -->
+                    <copy todir="${updates.dir}"
                           filtering="true">
                       <filterset>
                         <filter value="${db.version}" token="dbVersion"/>
                         <filter value="${allegro-obsdeb.jre.version}" token="jreVersion"/>
+                        <filter value="${tomcat.url}/updates/allegro-obsdeb/jre-${allegro-obsdeb.jre.version}-windows-i586.zip" token="jreWindowsi586Url"/>
+                        <filter value="${tomcat.url}/updates/allegro-obsdeb/jre-${allegro-obsdeb.jre.version}-windows-x64.zip" token="jreWindowsx64Url"/>
                         <filter value="${tomcat.url}/updates/allegro-obsdeb/obsdeb-db-${db.version}.zip" token="dbUrl"/>
                         <filter value="${tomcat.url}/updates/allegro-obsdeb/obsdeb-config.zip" token="configUrl"/>
                         <filter value="${config.version}" token="configVersion"/>
                         <filter value="${tomcat.url}/updates/allegro-obsdeb/t0403_product_OBSDEB_export-${allegro-obsdeb.export-plugin.version}.zip" token="exportPluginUrl"/>
                         <filter value="${allegro-obsdeb.export-plugin.version}" token="exportPluginVersion"/>
-                        <filter value="${allegro-obsdeb.distributionUrl}" token="distributionUrl"/>
+                        <!--<filter value="${allegro-obsdeb.distributionUrl}" token="distributionUrl"/>-->
+                        <filter value="${tomcat.url}/updates/allegro-obsdeb/obsdeb-ui-swing-${allegro-obsdeb.version}-standalone.zip" token="obsdebStandaloneUrl"/>
+                        <filter value="${tomcat.url}/updates/allegro-obsdeb/obsdeb-ui-swing-${allegro-obsdeb.version}-i18n.zip" token="obsdebI18nUrl"/>
+                        <filter value="${tomcat.url}/updates/allegro-obsdeb/obsdeb-ui-swing-${allegro-obsdeb.version}-help.zip" token="obsdebHelpUrl"/>
                         <filter value="${allegro-obsdeb.version}" token="projectVersion"/>
+                        <filter value="$${tomcat.url}/updates/allegro-obsdeb/obsdeb-ui-swing-launcher-${allegro-obsdeb.launcher.version}-bin.zip" token="launcherUrl"/>
                         <filter value="${allegro-obsdeb.launcher.version}" token="launcherVersion"/>
                       </filterset>
                       <fileset dir="src/main/conf/allegro-obsdeb-update-site" includes="*.properties"/>
                     </copy>
                     <copy file="${db.file}"
-                          tofile="${updates.dir}/allegro-obsdeb/obsdeb-db-${db.version}.zip"/>
+                          tofile="${updates.dir}/obsdeb-db-${db.version}.zip"/>
 
                     <!-- Create config ZIP file -->
-                    <copy todir="${updates.dir}/allegro-obsdeb/obsdeb-config">
+                    <copy todir="${updates.dir}/obsdeb-config">
                       <filterset>
                         <filter value="${database.jdbc.url}" token="jdbcUrl"/>
                         <filter value="${database.jdbc.username}" token="jdbcUsername"/>
@@ -771,10 +853,10 @@
                       </filterset>
                       <fileset dir="src/main/env/${env}/allegro-obsdeb/config"/>
                     </copy>
-                    <zip destfile="${updates.dir}/allegro-obsdeb/obsdeb-config.zip" update="false">
-                      <zipfileset dir="${updates.dir}/allegro-obsdeb/obsdeb-config"/>
+                    <zip destfile="${updates.dir}/obsdeb-config.zip" update="false">
+                      <zipfileset dir="${updates.dir}/obsdeb-config"/>
                     </zip>
-                    <delete dir="${updates.dir}/allegro-obsdeb/obsdeb-config"/>
+                    <delete dir="${updates.dir}/obsdeb-config"/>
                   </target>
                 </configuration>
               </execution>
