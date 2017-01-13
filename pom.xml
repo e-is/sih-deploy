@@ -73,6 +73,8 @@
     <!-- deploy environment -->
     <env>none</env>
 
+    <home.dir>${user.home}</home.dir>
+
     <!-- server version -->
     <tomcat.version>8.0.39</tomcat.version>
     <!--<tomcat.version>7.0.73</tomcat.version>-->
@@ -631,7 +633,6 @@
                 </goals>
                 <configuration>
                   <outputDirectory>${project.build.directory}/obsdeb-plugins</outputDirectory>
-                  <!--<useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>-->
                   <includeArtifactIds>
                     t0403_product_OBSDEB_export
                   </includeArtifactIds>
@@ -742,6 +743,7 @@
 
                     <!-- Configure adagio synchro server -->
                     <filterset id="adagio-synchro-server-filterset">
+                      <filter value="${home.dir}" token="homeDir"/>
                       <filter value="${database.jdbc.url}" token="jdbcUrl"/>
                       <filter value="${database.jdbc.username}" token="jdbcUsername"/>
                       <filter value="${database.jdbc.password}" token="jdbcPassword"/>
@@ -765,6 +767,7 @@
 
                     <!-- Configure extractor -->
                     <filterset id="adagio-extractor-filterset">
+                      <filter value="${home.dir}" token="homeDir"/>
                       <filter value="${extractor.database.jdbc.url}" token="jdbcUrl"/>
                       <filter value="${extractor.database.jdbc.username}" token="jdbcUsername"/>
                       <filter value="${extractor.database.jdbc.password}" token="jdbcPassword"/>
@@ -1230,6 +1233,7 @@
                     <delete dir="${clients.dir}/adagio-extractor-ui-${adagio-extractor.version}-standalone-zip" failonerror="false"/>
                     <copy todir="${adagio-extractor-batch.dir}">
                       <filterset>
+                        <filter value="${home.dir}" token="homeDir"/>
                         <filter value="${extractor.database.jdbc.url}" token="jdbcUrl"/>
                         <filter value="${extractor.database.jdbc.username}" token="jdbcUsername"/>
                         <filter value="${extractor.database.jdbc.password}" token="jdbcPassword"/>
