@@ -725,7 +725,8 @@
                       <filter value="${database.jdbc.username}" token="jdbcUsername"/>
                       <filter value="${database.jdbc.password}" token="jdbcPassword"/>
                       <filter value="${database.jdbc.cryptPassword}" token="jdbcCryptPassword"/>
-                    </filterset>                    <!-- default conf -->
+                    </filterset>
+                    <!-- default conf -->
                     <copy todir="${webapps.dir}/adagio-admin">
                       <filterset refid="adagio-admin-filterset"/>
                       <fileset dir="src/main/conf/adagio-admin"/>
@@ -792,6 +793,8 @@
                     <!-- Configure tomcat -->
                     <filterset id="tomcat-filterset">
                       <filter value="${tomcat.port}" token="serverPort"/>
+                      <filter value="${ldap.manager.username}" token="ldapUsername"/>
+                      <filter value="${ldap.manager.password}" token="ldapPassword"/>
                     </filterset>
                     <!-- default conf -->
                     <copy todir="${tomcat.dir}/">
