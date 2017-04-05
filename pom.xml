@@ -534,7 +534,7 @@
       </activation>
       <properties>
         <!-- SFA properties -->
-        <allegro-obsdeb.version>1.8.4-SFA</allegro-obsdeb.version>
+        <allegro-obsdeb.version>1.8.4.1-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
         <adagio.version>4.0.8</adagio.version>
         <tomcat.host>10.9.8.30</tomcat.host>
