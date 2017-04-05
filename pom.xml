@@ -1104,7 +1104,7 @@
                     <move file="${clients.dir}/obsdeb-ui-swing-${allegro-obsdeb.version}-${allegro-obsdeb.classifier}-zip/allegro-obsdeb-${allegro-obsdeb.version}"
                           tofile="${obsdeb.dir}" failonerror="false"/>
                     <delete dir="${clients.dir}/obsdeb-ui-swing-${allegro-obsdeb.version}-${allegro-obsdeb.classifier}-zip" includeEmptyDirs="true" failonerror="false"/>
-                    <copy todir="${obsdeb.dir}">
+                    <copy todir="${obsdeb.dir}" overwrite="true">
                       <filterset>
                         <filter value="${database.jdbc.url}" token="jdbcUrl"/>
                         <filter value="${database.jdbc.username}" token="jdbcUsername"/>
