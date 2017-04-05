@@ -517,9 +517,9 @@
       </activation>
       <properties>
         <!-- test configuration-->
-        <allegro-obsdeb.version>1.8.2-SFA</allegro-obsdeb.version>
+        <allegro-obsdeb.version>1.8.4-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
-        <adagio.version>4.0.5</adagio.version>
+        <adagio.version>4.0.8</adagio.version>
         <tomcat.port>8081</tomcat.port>
       </properties>
     </profile>
@@ -900,7 +900,7 @@
                           tofile="${updates.dir}/obsdeb-db-${db.version}.zip"/>
 
                     <!-- Create config ZIP file -->
-                    <copy todir="${updates.dir}/obsdeb-config">
+                    <copy todir="${updates.dir}/obsdeb-config/config">
                       <filterset>
                         <filter value="${database.jdbc.url}" token="jdbcUrl"/>
                         <filter value="${database.jdbc.username}" token="jdbcUsername"/>
@@ -909,6 +909,7 @@
                       </filterset>
                       <fileset dir="src/main/env/${env}/allegro-obsdeb/config"/>
                     </copy>
+                    <echo file="${updates.dir}/obsdeb-config/config/version.appup" append="false">${config.version}</echo>
                     <zip destfile="${updates.dir}/obsdeb-config.zip" update="false">
                       <zipfileset dir="${updates.dir}/obsdeb-config"/>
                     </zip>
