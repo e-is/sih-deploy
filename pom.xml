@@ -84,7 +84,8 @@
     <jboss.version>4.0.4.GA</jboss.version>
 
     <!-- webapps version -->
-    <adagio-admin.version>2.5.8</adagio-admin.version>
+    <!--<adagio-admin.version>2.5.8</adagio-admin.version>-->
+    <adagio-admin.version>2.6.7</adagio-admin.version>
     <adagio.version>4.0.4</adagio.version>
     <adagio-extractor.version>2.1.0</adagio-extractor.version>
 
@@ -534,7 +535,8 @@
       </activation>
       <properties>
         <!-- SFA properties -->
-        <allegro-obsdeb.version>1.8.7-SFA</allegro-obsdeb.version>
+        <adagio-admin.version>2.6.7-SFA</adagio-admin.version>
+        <allegro-obsdeb.version>1.8.8-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
         <adagio.version>4.0.8</adagio.version>
         <tomcat.host>10.9.8.30</tomcat.host>
@@ -727,7 +729,7 @@
                       <filter value="${database.jdbc.cryptPassword}" token="jdbcCryptPassword"/>
                     </filterset>
                     <!-- default conf -->
-                    <copy todir="${webapps.dir}/adagio-admin">
+                    <copy todir="${webapps.dir}/adagio-admin" overwrite="true">
                       <filterset refid="adagio-admin-filterset"/>
                       <fileset dir="src/main/conf/adagio-admin"/>
                     </copy>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context path="/adagio-admin">
+
+	<Resource
+			name="jdbc/adagio-admin-v2"
+			auth="Container"
+			type="javax.sql.DataSource"
+			driverClassName="oracle.jdbc.OracleDriver"
+			url="@jdbcUrl@"
+			username="@jdbcUsername@"
+			password="@jdbcPassword@"
+			maxTotal="5"
+			maxIdle="2"
+			maxWaitMillis="-1"
+	/>
+
+	<Environment
+			name="adagio-admin.conf"
+			type="java.lang.String"
+			value="${catalina.base}/conf/adagio-admin.conf"
+			override="false"
+	/>
+
+</Context>
+
