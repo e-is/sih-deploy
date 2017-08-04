@@ -535,7 +535,7 @@
       </activation>
       <properties>
         <!-- SFA properties -->
-        <adagio-admin.version>2.6.7.2-SFA</adagio-admin.version>
+        <adagio-admin.version>2.6.7.3-SFA</adagio-admin.version>
         <allegro-obsdeb.version>1.8.8-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
         <adagio.version>4.0.8</adagio.version>
