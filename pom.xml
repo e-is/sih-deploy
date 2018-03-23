@@ -84,7 +84,6 @@
     <jboss.version>4.0.4.GA</jboss.version>
 
     <!-- webapps version -->
-    <!--<adagio-admin.version>2.5.8</adagio-admin.version>-->
     <adagio-admin.version>2.6.7</adagio-admin.version>
     <adagio.version>4.0.4</adagio.version>
     <adagio-extractor.version>2.1.0</adagio-extractor.version>
@@ -535,7 +534,7 @@
       </activation>
       <properties>
         <!-- SFA properties -->
-        <adagio-admin.version>2.6.7.3-SFA</adagio-admin.version>
+        <adagio-admin.version>2.6.7.4-SFA</adagio-admin.version>
         <allegro-obsdeb.version>1.8.8-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
         <adagio.version>4.0.8</adagio.version>
@@ -774,6 +773,7 @@
                       <filter value="${extractor.database.jdbc.url}" token="jdbcUrl"/>
                       <filter value="${extractor.database.jdbc.username}" token="jdbcUsername"/>
                       <filter value="${extractor.database.jdbc.password}" token="jdbcPassword"/>
+                      <filter value="${database.jdbc.username}" token="jdbcSourceSchema"/>
                       <filter value="${tomcat.url}" token="serverUrl"/>
                     </filterset>
                     <!-- default conf-->
