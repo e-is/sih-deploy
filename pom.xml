@@ -4,7 +4,7 @@
 
   <groupId>pro.eis.sih</groupId>
   <artifactId>sih-deploy</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>pom</packaging>
   <name>Deployment of Halieutic Information Systems</name>
 
@@ -443,8 +443,8 @@
                 <requireProperty>
                   <property>env</property>
                   <message>You must set a deploy environment (-Denv=...) !</message>
-                  <regex>test|sfa</regex>
-                  <regexMessage>The 'env' property must be one of {test,sfa}.</regexMessage>
+                  <regex>default|sfa|sfa-test</regex>
+                  <regexMessage>The 'env' property must be one of {default,sfa,sfa-test}.</regexMessage>
                 </requireProperty>
                 <requireProperty>
                   <property>database.jdbc.url</property>
@@ -512,15 +512,11 @@
       <activation>
         <property>
           <name>env</name>
-          <value>test</value>
+          <value>default</value>
         </property>
       </activation>
       <properties>
-        <!-- test configuration-->
-        <allegro-obsdeb.version>1.8.5-SFA</allegro-obsdeb.version>
-        <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
-        <adagio.version>4.0.8</adagio.version>
-        <tomcat.port>8081</tomcat.port>
+        <!-- default configuration-->
       </properties>
     </profile>
 
@@ -539,6 +535,26 @@
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
         <adagio.version>4.0.8</adagio.version>
         <tomcat.host>10.9.8.30</tomcat.host>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>profile-sfa-test</id>
+      <activation>
+        <property>
+          <name>env</name>
+          <value>sfa-test</value>
+        </property>
+      </activation>
+      <properties>
+        <!-- SFA properties -->
+        <home.dir>c:\\dev\\sih-sfa</home.dir>
+        <adagio-admin.version>2.6.7.4-SFA</adagio-admin.version>
+        <allegro-obsdeb.version>1.8.8-SFA</allegro-obsdeb.version>
+        <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
+        <adagio.version>4.0.8</adagio.version>
+        <tomcat.host>localhost</tomcat.host>
+        <tomcat.port>8081</tomcat.port>
       </properties>
     </profile>
 
@@ -775,6 +791,10 @@
                       <filter value="${extractor.database.jdbc.password}" token="jdbcPassword"/>
                       <filter value="${database.jdbc.username}" token="jdbcSourceSchema"/>
                       <filter value="${tomcat.url}" token="serverUrl"/>
+                      <filter value="${mail.smtp.host}" token="smtpHost"/>
+                      <filter value="${mail.smtp.port}" token="smtpPort"/>
+                      <filter value="${mail.smtp.username}" token="smtpUsername"/>
+                      <filter value="${mail.smtp.password}" token="smtpPassword"/>
                     </filterset>
                     <!-- default conf-->
                     <copy todir="${webapps.dir}/adagio-extractor">
@@ -1243,6 +1263,7 @@
                         <filter value="${extractor.database.jdbc.url}" token="jdbcUrl"/>
                         <filter value="${extractor.database.jdbc.username}" token="jdbcUsername"/>
                         <filter value="${extractor.database.jdbc.password}" token="jdbcPassword"/>
+                        <filter value="${database.jdbc.username}" token="jdbcSourceSchema"/>
                         <filter value="${tomcat.url}" token="serverUrl"/>
                       </filterset>
                       <fileset dir="src/main/env/${env}/adagio-extractor-batch"/>
