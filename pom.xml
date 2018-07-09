@@ -531,10 +531,10 @@
       <properties>
         <!-- SFA properties -->
         <adagio-admin.version>2.6.7.4-SFA</adagio-admin.version>
-        <allegro-obsdeb.jre.version>1.8.162</allegro-obsdeb.jre.version>
-        <allegro-obsdeb.version>1.8.8-SFA</allegro-obsdeb.version>
+        <!--<allegro-obsdeb.jre.version>1.8.162</allegro-obsdeb.jre.version> TODO update jre when Win32ShellFolder2 problem happens -->
+        <allegro-obsdeb.version>1.8.9-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
-        <adagio.version>4.0.8</adagio.version>
+        <adagio.version>4.1.13</adagio.version>
         <tomcat.host>10.9.8.30</tomcat.host>
       </properties>
     </profile>
