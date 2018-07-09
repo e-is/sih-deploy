@@ -443,7 +443,7 @@
                 <requireProperty>
                   <property>env</property>
                   <message>You must set a deploy environment (-Denv=...) !</message>
-                  <regex>default|sfa|sfa-test</regex>
+                  <regex>default|sfa|sfa-test|test</regex>
                   <regexMessage>The 'env' property must be one of {default,sfa,sfa-test}.</regexMessage>
                 </requireProperty>
                 <requireProperty>
@@ -552,9 +552,24 @@
         <home.dir>c:\\dev\\sih-sfa</home.dir>
         <adagio-admin.version>2.6.7.4-SFA</adagio-admin.version>
         <!--<allegro-obsdeb.jre.version>1.8.162</allegro-obsdeb.jre.version> TODO update jre when Win32ShellFolder2 problem happens-->
-        <allegro-obsdeb.version>1.8.8-SFA</allegro-obsdeb.version>
+        <allegro-obsdeb.version>1.8.9-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
-        <adagio.version>4.0.8</adagio.version>
+        <adagio.version>4.1.13</adagio.version>
+        <tomcat.host>localhost</tomcat.host>
+        <tomcat.port>8081</tomcat.port>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>profile-localhost-test</id>
+      <activation>
+        <property>
+          <name>env</name>
+          <value>test</value>
+        </property>
+      </activation>
+      <properties>
+        <!--<adagio-admin.version>2.6.7.4-SFA</adagio-admin.version>-->
         <tomcat.host>localhost</tomcat.host>
         <tomcat.port>8081</tomcat.port>
       </properties>
@@ -1142,9 +1157,10 @@
                     <delete dir="${clients.dir}/t0403_product_OBSDEB_export-${allegro-obsdeb.export-plugin.version}-zip" includeEmptyDirs="true" failonerror="false"/>
                     <echo file="${obsdeb.dir}/plugins/t0403_product_OBSDEB_export/version.appup" append="false">${allegro-obsdeb.export-plugin.version}</echo>
                     <delete dir="${obsdeb.dir}/data"/>
-                    <unzip src="src/main/env/${env}/allegro-obsdeb-db/db.zip"
-                           dest="${obsdeb.dir}/data"
-                           overwrite="true"/>
+                    <!-- uncomment if synchro server doesn't handle installation database -->
+                    <!--<unzip src="src/main/env/${env}/allegro-obsdeb-db/db.zip"-->
+                           <!--dest="${obsdeb.dir}/data"-->
+                           <!--overwrite="true"/>-->
                     <zip destfile="${site.dir}/downloads/allegro-obsdeb.zip" update="false">
                       <zipfileset dir="${obsdeb.dir}" includes="**/*"/>
                     </zip>
