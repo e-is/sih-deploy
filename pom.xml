@@ -536,7 +536,7 @@
         <!--<allegro-obsdeb.jre.version>1.8.162</allegro-obsdeb.jre.version> TODO update jre when Win32ShellFolder2 problem happens -->
         <allegro-obsdeb.version>1.8.14-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
-        <adagio.version>4.1.13</adagio.version>
+        <adagio.version>4.1.13.1</adagio.version>
         <tomcat.host>10.9.8.30</tomcat.host>
       </properties>
     </profile>
@@ -556,7 +556,7 @@
         <!--<allegro-obsdeb.jre.version>1.8.162</allegro-obsdeb.jre.version> TODO update jre when Win32ShellFolder2 problem happens-->
         <allegro-obsdeb.version>1.8.14-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
-        <adagio.version>4.1.13</adagio.version>
+        <adagio.version>4.1.13.1</adagio.version>
         <tomcat.host>localhost</tomcat.host>
         <tomcat.port>8081</tomcat.port>
       </properties>
