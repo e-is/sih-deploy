@@ -534,7 +534,7 @@
         <home.dir>D:/SIH</home.dir>
         <adagio-admin.version>2.6.7.5-SFA</adagio-admin.version>
         <!--<allegro-obsdeb.jre.version>1.8.162</allegro-obsdeb.jre.version> TODO update jre when Win32ShellFolder2 problem happens -->
-        <allegro-obsdeb.version>1.8.13-SFA</allegro-obsdeb.version>
+        <allegro-obsdeb.version>1.8.14-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
         <adagio.version>4.1.13</adagio.version>
         <tomcat.host>10.9.8.30</tomcat.host>
@@ -554,7 +554,7 @@
         <home.dir>c:\\dev\\sih-sfa</home.dir>
         <adagio-admin.version>2.6.7.5-SFA</adagio-admin.version>
         <!--<allegro-obsdeb.jre.version>1.8.162</allegro-obsdeb.jre.version> TODO update jre when Win32ShellFolder2 problem happens-->
-        <allegro-obsdeb.version>1.8.13-SFA</allegro-obsdeb.version>
+        <allegro-obsdeb.version>1.8.14-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
         <adagio.version>4.1.13</adagio.version>
         <tomcat.host>localhost</tomcat.host>
