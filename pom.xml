@@ -761,6 +761,10 @@
                         </copy>
                       </then>
                     </if>
+                    <!-- Remove ojdbc lib-->
+                    <delete>
+                      <fileset dir="${webapps.dir}/adagio-admin/WEB-INF/lib" includes="ojdbc*.jar"/>
+                    </delete>
                     <!-- Configure adagio-admin -->
                     <filterset id="adagio-admin-filterset">
                       <filter value="${database.jdbc.url}" token="jdbcUrl"/>
