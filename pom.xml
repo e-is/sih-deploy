@@ -104,7 +104,8 @@
     <allegro-remote.classifier>activeDirectory</allegro-remote.classifier>
 
     <!-- lib versions -->
-    <jdbc.ojdbc7.version>12.1.0.2.0</jdbc.ojdbc7.version>
+    <!--<jdbc.ojdbc7.version>12.1.0.2.0</jdbc.ojdbc7.version>-->
+    <jdbc.ojdbc8.version>12.2.0.1</jdbc.ojdbc8.version>
     <jdbc.hsqldb.version>2.3.2</jdbc.hsqldb.version>
     <log4j.version>1.2.17</log4j.version>
     <slf4j.version>1.7.8</slf4j.version>
@@ -339,10 +340,15 @@
       <type>zip</type>
     </dependency>
 
+    <!--<dependency>-->
+      <!--<groupId>com.oracle</groupId>-->
+      <!--<artifactId>ojdbc7</artifactId>-->
+      <!--<version>${jdbc.ojdbc7.version}</version>-->
+    <!--</dependency>-->
     <dependency>
       <groupId>com.oracle</groupId>
-      <artifactId>ojdbc7</artifactId>
-      <version>${jdbc.ojdbc7.version}</version>
+      <artifactId>ojdbc8</artifactId>
+      <version>${jdbc.ojdbc8.version}</version>
     </dependency>
     <dependency>
       <groupId>org.hsqldb</groupId>
@@ -534,9 +540,9 @@
         <home.dir>D:/SIH</home.dir>
         <adagio-admin.version>2.6.7.5-SFA</adagio-admin.version>
         <!--<allegro-obsdeb.jre.version>1.8.162</allegro-obsdeb.jre.version> TODO update jre when Win32ShellFolder2 problem happens -->
-        <allegro-obsdeb.version>1.8.15-SFA</allegro-obsdeb.version>
+        <allegro-obsdeb.version>1.8.16-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
-        <adagio.version>4.1.13.1</adagio.version>
+        <adagio.version>4.1.13.3</adagio.version>
         <tomcat.host>10.9.8.30</tomcat.host>
       </properties>
     </profile>
@@ -554,9 +560,9 @@
         <home.dir>c:\\dev\\sih-sfa</home.dir>
         <adagio-admin.version>2.6.7.5-SFA</adagio-admin.version>
         <!--<allegro-obsdeb.jre.version>1.8.162</allegro-obsdeb.jre.version> TODO update jre when Win32ShellFolder2 problem happens-->
-        <allegro-obsdeb.version>1.8.15-SFA</allegro-obsdeb.version>
+        <allegro-obsdeb.version>1.8.16-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
-        <adagio.version>4.1.13.1</adagio.version>
+        <adagio.version>4.1.13.3</adagio.version>
         <tomcat.host>localhost</tomcat.host>
         <tomcat.port>8081</tomcat.port>
       </properties>
@@ -654,7 +660,7 @@
                   <outputDirectory>${tomcat.dir}/lib</outputDirectory>
                   <!--<silent>false</silent>-->
                   <includeArtifactIds>
-                    ojdbc7,
+                    ojdbc8,
                     hsqldb,
                     log4j
                   </includeArtifactIds>
@@ -1023,7 +1029,7 @@
                   <outputDirectory>${project.build.directory}/jboss-${jboss.version}/server/default/lib</outputDirectory>
                   <silent>true</silent>
                   <includeArtifactIds>
-                    ojdbc7
+                    ojdbc8
                   </includeArtifactIds>
                 </configuration>
               </execution>
