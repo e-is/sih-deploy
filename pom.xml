@@ -543,7 +543,7 @@
         <allegro-obsdeb.version>1.8.26-SFA</allegro-obsdeb.version>
         <allegro-obsdeb.launcher.version>1.8.2-SFA</allegro-obsdeb.launcher.version>
         <adagio.version>4.1.25</adagio.version>
-        <tomcat.host>10.9.8.30</tomcat.host>
+        <tomcat.host>10.9.36.166</tomcat.host>
       </properties>
     </profile>
 
