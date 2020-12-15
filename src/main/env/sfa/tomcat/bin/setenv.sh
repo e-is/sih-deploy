@@ -86,5 +86,8 @@ if [ -r "$CATALINA_BASE/bin/appenv.sh" ]; then
   . "$CATALINA_BASE/bin/appenv.sh"
 fi
 
-echo "Using CATALINA_OPTS:   $CATALINA_OPTS
-echo "Using JAVA_OPTS:       $JAVA_OPTS
+# Force IPv4
+export JAVA_OPTS="$JAVA_OPTS -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses"
+
+echo "Using CATALINA_OPTS:   $CATALINA_OPTS"
+echo "Using JAVA_OPTS:       $JAVA_OPTS"
