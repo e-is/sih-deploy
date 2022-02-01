@@ -78,7 +78,7 @@
     <!-- server version -->
 <!--    TODO upgrade tomcat to 8.5.51 -->
 <!--    <tomcat.version>8.5.51</tomcat.version>-->
-    <tomcat.version>8.0.39</tomcat.version>
+    <tomcat.version>8.5.75</tomcat.version>
     <tomcat.port>8080</tomcat.port>
     <tomcat.host>localhost</tomcat.host>
     <tomcat.url>http://${tomcat.host}:${tomcat.port}</tomcat.url>
