@@ -106,7 +106,7 @@
     <!-- lib versions -->
     <!--<jdbc.ojdbc7.version>12.1.0.2.0</jdbc.ojdbc7.version>-->
     <jdbc.ojdbc8.version>12.2.0.1</jdbc.ojdbc8.version>
-    <jdbc.hsqldb.version>2.3.2</jdbc.hsqldb.version>
+    <jdbc.hsqldb.version>2.7.1</jdbc.hsqldb.version>
     <log4j.version>1.2.17</log4j.version>
     <slf4j.version>1.7.8</slf4j.version>
 
